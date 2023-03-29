@@ -1,12 +1,12 @@
 {
     "vulnerable": {
-        "C/C++": [
+        "C_CPP": [
             "https://github.com/hardik05/Damn_Vulnerable_C_Program",
             "https://github.com/conikeec/seeve",
             "https://github.com/atxsinn3r/VulnCases",
             "https://github.com/patricia-gallardo/insecure-coding-examples"
         ],
-        "C#": [
+        "CSharp": [
             "https://github.com/appsecco/dvcsharp-api",
             "https://github.com/zsusac/VulnerableCoreApp",
             "https://github.com/ahmetak4n/vuln-netframework",
@@ -90,7 +90,7 @@
         ]
     },
     "non-vulnerable": {
-        "C/C++": [
+        "C_CPP": [
             "https://github.com/FLIF-hub/FLIF",
             "https://github.com/NVIDIAGameWorks/PhysX-3.4",
             "https://github.com/milostosic/MTuner",
@@ -99,7 +99,7 @@
             "https://github.com/chukong/quick-cocos2d-x",
             "https://github.com/fossasia/neurolab-firmware"
         ],
-        "C#": [
+        "CSharp": [
             "https://github.com/Redth/PushSharp",
             "https://github.com/zzzprojects/EntityFramework-Plus",
             "https://github.com/tangxuehua/enode",
