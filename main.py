@@ -177,7 +177,7 @@ def run_codeql_scan(vulnerable, language, codeql_language, address):
         # run codeql scan on non-vulnerable repositories
         directory = "repositories/non-vulnerable/" + language + "/" + address.split("/")[-1]
         project_directory = current_directory + "/" + directory
-    os.system(f"docker run --rm --name codeql-container -it -v {project_directory}:/src --entrypoint /bin/bash mcr.microsoft.com/cstsectools/codeql-container -c \"codeql database create --language={codeql_language} --threads=0 --source-root /src /src/database --overwrite && cd /src && codeql database analyze /src/database --threads=0 --format csv -o /src/codeql-results.csv\"")
+    os.system(f"docker run --rm -it -v {project_directory}:/src --entrypoint /bin/bash mcr.microsoft.com/cstsectools/codeql-container -c \"codeql database create --language={codeql_language} --threads=0 --source-root /src /src/database --overwrite && cd /src && codeql database analyze /src/database --threads=0 --format csv -o /src/codeql-results.csv\"")
     
 
 print_info("Updating git repositories")
