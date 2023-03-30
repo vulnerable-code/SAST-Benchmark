@@ -178,48 +178,46 @@ def run_codeql_scan(vulnerable, language, codeql_language, address):
 print_info("Updating git repositories")
 if __name__ == '__main__':
     # update vulnerable repositories
-    # for language in configurations["vulnerable"]:
-    #     print_info("Updating vulnerable repositories for language {}".format(language))
-    #     for repository in configurations["vulnerable"][language]:
-    #         print_info("Updating vulnerable repository: {}".format( repository))
-    #         multiprocess_worker(update_git_repositories, (True, language, repository))
+    for language in configurations["vulnerable"]:
+        print_info("Updating vulnerable repositories for language {}".format(language))
+        for repository in configurations["vulnerable"][language]:
+            print_info("Updating vulnerable repository: {}".format( repository))
+            multiprocess_worker(update_git_repositories, (True, language, repository))
             
 
-    # # update non-vulnerable repositories
-    # for language in configurations["non-vulnerable"]:
-    #     print_info("Updating non-vulnerable repositories for language {}".format(language))
-    #     for repository in configurations["non-vulnerable"][language]:
-    #         print_info("Updating non-vulnerable repository: {}".format(repository))
-    #         multiprocess_worker(update_git_repositories, (False, language, repository))
+    # update non-vulnerable repositories
+    for language in configurations["non-vulnerable"]:
+        print_info("Updating non-vulnerable repositories for language {}".format(language))
+        for repository in configurations["non-vulnerable"][language]:
+            print_info("Updating non-vulnerable repository: {}".format(repository))
+            multiprocess_worker(update_git_repositories, (False, language, repository))
     
     print_info("Git repositories updated successfully")
 
     # run shiftleft scan on vulnerable repositories
-    # for language in configurations["vulnerable"]:  
-    #     print_info("Running shiftleft scan on vulnerable repositories for language {}".format(language))
-    #     for repository in configurations["vulnerable"][language]:
-    #         print_info("Running shiftleft scan on vulnerable repository: {}".format(repository))
-    #         multiprocess_worker(run_shiftleft_scan, (True, language, repository))
-    #         # initial test break early
-    #         break
+    for language in configurations["vulnerable"]:  
+        print_info("Running shiftleft scan on vulnerable repositories for language {}".format(language))
+        for repository in configurations["vulnerable"][language]:
+            print_info("Running shiftleft scan on vulnerable repository: {}".format(repository))
+            multiprocess_worker(run_shiftleft_scan, (True, language, repository))
     
     # run shiftleft scan on non-vulnerable repositories
-    # for language in configurations["non-vulnerable"]:
-    #     print_info("Running shiftleft scan on non-vulnerable repositories for language {}".format(language))
-    #     for repository in configurations["non-vulnerable"][language]:
-    #         print_info("Running shiftleft scan on non-vulnerable repository: {}".format(repository))
-    #         multiprocess_worker(run_shiftleft_scan, (False, language, repository))
+    for language in configurations["non-vulnerable"]:
+        print_info("Running shiftleft scan on non-vulnerable repositories for language {}".format(language))
+        for repository in configurations["non-vulnerable"][language]:
+            print_info("Running shiftleft scan on non-vulnerable repository: {}".format(repository))
+            multiprocess_worker(run_shiftleft_scan, (False, language, repository))
     
     
 
     # print_info("Shiftleft scan completed successfully")
-    # for shiftleft_report in glob.glob('./repositories/*/*/*/reports', recursive=True):
-    #     vulnerable = shiftleft_report.split("/")[2]
-    #     language = shiftleft_report.split("/")[3]
-    #     repository = shiftleft_report.split("/")[4]
-    #     os.system("rm -rf scan_results/shiftleft_scan/" + vulnerable + "/" + language + "/" + repository)
-    #     os.system("mkdir -p scan_results/shiftleft_scan/" + vulnerable + "/" + language + "/" + repository)
-    #     os.system("mv " + shiftleft_report + "/* scan_results/shiftleft_scan/" + vulnerable + "/" + language + "/" + repository + "/")
+    for shiftleft_report in glob.glob('./repositories/*/*/*/reports', recursive=True):
+        vulnerable = shiftleft_report.split("/")[2]
+        language = shiftleft_report.split("/")[3]
+        repository = shiftleft_report.split("/")[4]
+        os.system("rm -rf scan_results/shiftleft_scan/" + vulnerable + "/" + language + "/" + repository)
+        os.system("mkdir -p scan_results/shiftleft_scan/" + vulnerable + "/" + language + "/" + repository)
+        os.system("mv " + shiftleft_report + "/* scan_results/shiftleft_scan/" + vulnerable + "/" + language + "/" + repository + "/")
 
     print_info("starting codeql scan")
     # list_of_compiled_languages= os.popen('''docker run --rm --name codeql-container -it --entrypoint /bin/bash mcr.microsoft.com/cstsectools/codeql-container -c "codeql resolve languages"''').read().split("\n")[:-1]
@@ -246,13 +244,6 @@ if __name__ == '__main__':
             for repository in configurations["vulnerable"][language]:
                 print_info("Running codeql scan on vulnerable repository: {}".format(repository))
                 multiprocess_worker(run_codeql_scan, (True, language, code_ql_languages[language], repository))
-                # initial test break early
-                break
-            break
-        
-
-    
-
     
     while True:
         for process in processes:
@@ -261,3 +252,5 @@ if __name__ == '__main__':
         if not processes:
             break
         time.sleep(0.1)
+    print_info("Codeql scan completed successfully")
+    print("Done")
