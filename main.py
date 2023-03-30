@@ -231,6 +231,6 @@ if __name__ == '__main__':
     #     os.system("mv " + shiftleft_report + "/* scan_results/shiftleft_scan/" + vulnerable + "/" + language + "/" + repository + "/")
 
     print_info("starting codeql scan")
-    list_of_compiled_languages= os.popen('''docker run --rm --name codeql-container -it --entrypoint /bin/bash mcr.microsoft.com/cstsectools/codeql-container -c "codeql resolve languages"''').read().split("\n")
+    list_of_compiled_languages= os.popen('''docker run --rm --name codeql-container -it --entrypoint /bin/bash mcr.microsoft.com/cstsectools/codeql-container -c "codeql resolve languages"''').read().split("\n")[:-1]
     list_of_compiled_languages = [language.split()[0] for language in list_of_compiled_languages]
     print(list_of_compiled_languages)
