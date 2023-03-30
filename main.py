@@ -240,10 +240,18 @@ if __name__ == '__main__':
     # run codeql scan on vulnerable repositories
     for language in configurations["vulnerable"]:
         print_info("Running codeql scan on vulnerable repositories for language {}".format(language))
-        if language in code_ql_languages and language == "Python":
+        if language in code_ql_languages:
             for repository in configurations["vulnerable"][language]:
                 print_info("Running codeql scan on vulnerable repository: {}".format(repository))
                 multiprocess_worker(run_codeql_scan, (True, language, code_ql_languages[language], repository))
+    
+    # run codeql scan on non-vulnerable repositories
+    for language in configurations["non-vulnerable"]:
+        print_info("Running codeql scan on non-vulnerable repositories for language {}".format(language))
+        if language in code_ql_languages:
+            for repository in configurations["non-vulnerable"][language]:
+                print_info("Running codeql scan on non-vulnerable repository: {}".format(repository))
+                multiprocess_worker(run_codeql_scan, (False, language, code_ql_languages[language], repository))
     
     while True:
         for process in processes:
