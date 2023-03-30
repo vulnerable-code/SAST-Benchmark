@@ -234,7 +234,7 @@ if __name__ == '__main__':
         "Java": "java",
         "Kotlin": "java",
         "C_CPP": "cpp",
-        "Csharp": "csharp",
+        "CSharp": "csharp",
         "Ruby": "ruby",
         "Go": "go",
         # 'html': "",
@@ -246,11 +246,12 @@ if __name__ == '__main__':
     # run codeql scan on vulnerable repositories
     for language in configurations["vulnerable"]:
         print_info("Running codeql scan on vulnerable repositories for language {}".format(language))
-        for repository in configurations["vulnerable"][language]:
-            print_info("Running codeql scan on vulnerable repository: {}".format(repository))
-            multiprocess_worker(run_codeql_scan, (True, language, code_ql_languages[language], repository))
-            # initial test break early
-            break
+        if language in code_ql_languages:
+            for repository in configurations["vulnerable"][language]:
+                print_info("Running codeql scan on vulnerable repository: {}".format(repository))
+                multiprocess_worker(run_codeql_scan, (True, language, code_ql_languages[language], repository))
+                # initial test break early
+                break
 
     
 
