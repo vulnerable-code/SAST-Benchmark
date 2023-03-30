@@ -157,43 +157,45 @@ def create_codeql_databases(language):
     """
     os.system('''docker run --rm --name codeql-docker -v "/tmp/src:/opt/src" -v "/tmp/results:/opt/results" -e "LANGUAGE=go" j3ssie/codeql-docker:latest''')
 
-# def run_codeql_scan(vulnerable, language, address):
-#     """
-#     run codeql scan on repository
-#     :param vulnerable: True if repository is vulnerable, False if repository is non-vulnerable
-#     :param language: programming language of the repository
-#     :param address: git repository address
-#     :return: None
-#     """
-#     current_directory = os.getcwd()
-#     # run codeql scan on repositories
-#     if vulnerable:
-#         # run codeql scan on vulnerable repositories
-#         directory = "repositories/vulnerable/" + language + "/" + address.split("/")[-1]
-#         project_directory = current_directory + "/" + directory
-#     else:
-#         # run codeql scan on non-vulnerable repositories
-#         directory = "repositories/non-vulnerable/" + language + "/" + address.split("/")[-1]
-#         project_directory = current_directory + "/" + directory
-#     os.system(f"codeql database create {project_directory} --language={language}")
-#     os.system(f"codeql database analyze {project_directory} codeql-{language}-code-scanning.qls --format=csv --output={project_directory}/codeql-results.csv")
+def run_codeql_scan(vulnerable, language, codeql_language, address):
+    """
+    run codeql scan on repository
+    :param vulnerable: True if repository is vulnerable, False if repository is non-vulnerable
+    :param language: programming language of the repository
+    :param codeql_language: codeql language of the repository
+    :param address: git repository address
+    :return: None
+    """
+    # docker run --rm --name codeql-container -it -v /home/azureuser/SAST-Benchmark/codeql-dbs/python:/database -v /home/azureuser/SAST-Benchmark/repositories/vulnerable/Python/pygoat:/src --entrypoint /bin/bash mcr.microsoft.com/cstsectools/codeql-container -c "codeql database create --language=python --threads=0 --source-root /src /database --overwrite && cd /src && codeql database analyze /database --threads=0 --format csv -o /src/codeql-results.csv" 
+    current_directory = os.getcwd()
+    # run codeql scan on repositories
+    if vulnerable:
+        # run codeql scan on vulnerable repositories
+        directory = "repositories/vulnerable/" + language + "/" + address.split("/")[-1]
+        project_directory = current_directory + "/" + directory
+    else:
+        # run codeql scan on non-vulnerable repositories
+        directory = "repositories/non-vulnerable/" + language + "/" + address.split("/")[-1]
+        project_directory = current_directory + "/" + directory
+    os.system(f"docker run --rm --name codeql-container -it -v {project_directory}:/src --entrypoint /bin/bash mcr.microsoft.com/cstsectools/codeql-container -c \"codeql database create --language={codeql_language} --threads=0 --source-root /src /src/database --overwrite && cd /src && codeql database analyze /src/database --threads=0 --format csv -o /src/codeql-results.csv\"")
+    
 
 print_info("Updating git repositories")
 if __name__ == '__main__':
     # update vulnerable repositories
-    for language in configurations["vulnerable"]:
-        print_info("Updating vulnerable repositories for language {}".format(language))
-        for repository in configurations["vulnerable"][language]:
-            print_info("Updating vulnerable repository: {}".format( repository))
-            multiprocess_worker(update_git_repositories, (True, language, repository))
+    # for language in configurations["vulnerable"]:
+    #     print_info("Updating vulnerable repositories for language {}".format(language))
+    #     for repository in configurations["vulnerable"][language]:
+    #         print_info("Updating vulnerable repository: {}".format( repository))
+    #         multiprocess_worker(update_git_repositories, (True, language, repository))
             
 
-    # update non-vulnerable repositories
-    for language in configurations["non-vulnerable"]:
-        print_info("Updating non-vulnerable repositories for language {}".format(language))
-        for repository in configurations["non-vulnerable"][language]:
-            print_info("Updating non-vulnerable repository: {}".format(repository))
-            multiprocess_worker(update_git_repositories, (False, language, repository))
+    # # update non-vulnerable repositories
+    # for language in configurations["non-vulnerable"]:
+    #     print_info("Updating non-vulnerable repositories for language {}".format(language))
+    #     for repository in configurations["non-vulnerable"][language]:
+    #         print_info("Updating non-vulnerable repository: {}".format(repository))
+    #         multiprocess_worker(update_git_repositories, (False, language, repository))
     
     print_info("Git repositories updated successfully")
 
@@ -213,13 +215,7 @@ if __name__ == '__main__':
     #         print_info("Running shiftleft scan on non-vulnerable repository: {}".format(repository))
     #         multiprocess_worker(run_shiftleft_scan, (False, language, repository))
     
-    while True:
-        for process in processes:
-            if not process.is_alive():
-                processes.remove(process)
-        if not processes:
-            break
-        time.sleep(0.1)
+    
 
     # print_info("Shiftleft scan completed successfully")
     # for shiftleft_report in glob.glob('./repositories/*/*/*/reports', recursive=True):
@@ -231,6 +227,38 @@ if __name__ == '__main__':
     #     os.system("mv " + shiftleft_report + "/* scan_results/shiftleft_scan/" + vulnerable + "/" + language + "/" + repository + "/")
 
     print_info("starting codeql scan")
-    list_of_compiled_languages= os.popen('''docker run --rm --name codeql-container -it --entrypoint /bin/bash mcr.microsoft.com/cstsectools/codeql-container -c "codeql resolve languages"''').read().split("\n")[:-1]
-    list_of_compiled_languages = [language.split()[0] for language in list_of_compiled_languages]
-    print(list_of_compiled_languages)
+    # list_of_compiled_languages= os.popen('''docker run --rm --name codeql-container -it --entrypoint /bin/bash mcr.microsoft.com/cstsectools/codeql-container -c "codeql resolve languages"''').read().split("\n")[:-1]
+    code_ql_languages = {
+        "JS_TS": "javascript",
+        "Python": "python",
+        "Java": "java",
+        "Kotlin": "java",
+        "C_CPP": "cpp",
+        "Csharp": "csharp",
+        "Ruby": "ruby",
+        "Go": "go",
+        # 'html': "",
+        # 'csv': "",
+        # 'xml': "",
+        # 'properties': ""
+    }
+
+    # run codeql scan on vulnerable repositories
+    for language in configurations["vulnerable"]:
+        print_info("Running codeql scan on vulnerable repositories for language {}".format(language))
+        for repository in configurations["vulnerable"][language]:
+            print_info("Running codeql scan on vulnerable repository: {}".format(repository))
+            multiprocess_worker(run_codeql_scan, (True, language, code_ql_languages[language], repository))
+            # initial test break early
+            break
+
+    
+
+    
+    while True:
+        for process in processes:
+            if not process.is_alive():
+                processes.remove(process)
+        if not processes:
+            break
+        time.sleep(0.1)
