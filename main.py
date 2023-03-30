@@ -164,12 +164,12 @@ def run_codeql_scan(vulnerable, language, codeql_language, address):
         # run codeql scan on vulnerable repositories
         directory = "repositories/vulnerable/" + language + "/" + address.split("/")[-1]
         project_directory = current_directory + "/" + directory
-        report_dir = "/src/scan_results/codeql_scan/vulnerable/" + language + "/" + address.split("/")[-1] 
+        report_dir = "scan_results/codeql_scan/vulnerable/" + language + "/" + address.split("/")[-1] 
     else:
         # run codeql scan on non-vulnerable repositories
         directory = "repositories/non-vulnerable/" + language + "/" + address.split("/")[-1]
         project_directory = current_directory + "/" + directory
-        report_dir = "/src/scan_results/codeql_scan/non-vulnerable/" + language + "/" + address.split("/")[-1]
+        report_dir = "scan_results/codeql_scan/non-vulnerable/" + language + "/" + address.split("/")[-1]
     os.system(f"docker run --rm -it -v {project_directory}:/src:Z --entrypoint /bin/bash mcr.microsoft.com/cstsectools/codeql-container -c \"codeql database create --language={codeql_language} --threads=0 --source-root /src /tmp/database --overwrite && cd /src && mkdir -p {report_dir} && codeql database analyze /tmp/database --threads=0 --format csv -o {report_dir}/report.csv\"")
     
     
