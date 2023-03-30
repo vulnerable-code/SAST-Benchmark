@@ -114,16 +114,16 @@ def update_git_repositories(vulnerable, language ,address):
     if vulnerable:
         # clone vulnerable repositories into repositories/vulnerable directory
         if not os.path.isdir("repositories/vulnerable"):
-            os.mkdir("repositories/vulnerable")
+            os.system("mkdir -p repositories/vulnerable")
         if not os.path.isdir("repositories/vulnerable/" + language):
-            os.mkdir("repositories/vulnerable/" + language)
+            os.system("mkdir -p repositories/vulnerable/" + language)
         directory = "repositories/vulnerable/" + language
     else:
         # clone non-vulnerable repositories into repositories/non-vulnerable directory
         if not os.path.isdir("repositories/non-vulnerable"):
-            os.mkdir("repositories/non-vulnerable")
+            os.system("mkdir -p repositories/non-vulnerable")
         if not os.path.isdir("repositories/non-vulnerable/" + language):
-            os.mkdir("repositories/non-vulnerable/" + language)
+            os.system("mkdir -p repositories/non-vulnerable/" + language)
         directory = "repositories/non-vulnerable/" + language
     clone_repo(address, directory)
 
@@ -231,6 +231,6 @@ if __name__ == '__main__':
     #     os.system("mv " + shiftleft_report + "/* scan_results/shiftleft_scan/" + vulnerable + "/" + language + "/" + repository + "/")
 
     print_info("starting codeql scan")
-    list_of_compiled_languages= os.popen('''docker run --rm --name codeql-container -it --entrypoint /bin/bash mcr.microsoft.com/cstsectools/codeql-container -c "codeql resolve languages"''').read()
-    list_of_compiled_languages = [language for language in list_of_compiled_languages.split("\n").split()[0]]
+    list_of_compiled_languages= os.popen('''docker run --rm --name codeql-container -it --entrypoint /bin/bash mcr.microsoft.com/cstsectools/codeql-container -c "codeql resolve languages"''').read().split("\n")
+    list_of_compiled_languages = [language for language in list_of_compiled_languages.split()[0]]
     print(list_of_compiled_languages)
