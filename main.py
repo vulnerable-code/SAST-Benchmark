@@ -181,6 +181,7 @@ def run_codeql_scan(vulnerable, language, codeql_language, address):
         report_dir = "/src/scan_results/codeql_scan/non-vulnerable/" + language + "/" + address.split("/")[-1]
     os.system(f"docker run --rm -it -v {project_directory}:/src --entrypoint /bin/bash mcr.microsoft.com/cstsectools/codeql-container -c \"codeql database create --language={codeql_language} --threads=0 --source-root /src /tmp/database --overwrite && cd /src && mkdir -p /src/scan_results/codeql_scan/ && codeql database analyze /tmp/database --threads=0 --format csv -o {report_dir}/report.csv\"")
     
+    
 
 print_info("Updating git repositories")
 if __name__ == '__main__':
@@ -244,16 +245,19 @@ if __name__ == '__main__':
         # 'xml': "",
         # 'properties': ""
     }
+    os.system("chmod 777 scan_results/codeql_scan")
 
     # run codeql scan on vulnerable repositories
     for language in configurations["vulnerable"]:
         print_info("Running codeql scan on vulnerable repositories for language {}".format(language))
-        if language in code_ql_languages:
+        if language in code_ql_languages and language == "Python":
             for repository in configurations["vulnerable"][language]:
                 print_info("Running codeql scan on vulnerable repository: {}".format(repository))
                 multiprocess_worker(run_codeql_scan, (True, language, code_ql_languages[language], repository))
                 # initial test break early
                 break
+            break
+        
 
     
 
