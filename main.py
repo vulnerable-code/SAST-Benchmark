@@ -3,8 +3,14 @@
 import os
 import sys
 import json
+import multiprocessing
+import glob
+import time
+import json
 from shutil import which
 
+max_workers = 5
+processes = []
 configuration_file = "applications.json"
 
 def print_info(message):
@@ -30,6 +36,22 @@ def print_warning(message):
     :return: None
     """
     print("[!] " + message)
+
+def multiprocess_worker(function, args):
+    """
+    worker function for multiprocessing
+    :param vulnerable: True if repository is vulnerable, False if repository is non-vulnerable
+    :param language: programming language of the repository
+    :param address: git repository address
+    :return: None
+    """
+    while True:
+        if len(multiprocessing.active_children()) < max_workers + 1:
+            break
+        time.sleep(0.1)
+    process = multiprocessing.Process(target=function, args=args)
+    process.start()
+    processes.append(process)
 
 # check if configuration file is provided
 if len(sys.argv) == 2:
@@ -96,7 +118,6 @@ def update_git_repositories(vulnerable, language ,address):
         if not os.path.isdir("repositories/vulnerable/" + language):
             os.mkdir("repositories/vulnerable/" + language)
         directory = "repositories/vulnerable/" + language
-        clone_repo(address, directory)
     else:
         # clone non-vulnerable repositories into repositories/non-vulnerable directory
         if not os.path.isdir("repositories/non-vulnerable"):
@@ -104,22 +125,112 @@ def update_git_repositories(vulnerable, language ,address):
         if not os.path.isdir("repositories/non-vulnerable/" + language):
             os.mkdir("repositories/non-vulnerable/" + language)
         directory = "repositories/non-vulnerable/" + language
-        clone_repo(address, directory)
+    clone_repo(address, directory)
+
+# docker run --rm -e "WORKSPACE=${PWD}" -v $PWD:/app shiftleft/scan scan --local-only
+def run_shiftleft_scan(vulnerable, language, address):
+    """
+    run shiftleft scan on repository
+    :param vulnerable: True if repository is vulnerable, False if repository is non-vulnerable
+    :param language: programming language of the repository
+    :param address: git repository address
+    :return: None
+    """
+    current_directory = os.getcwd()
+    # run shiftleft scan on repositories
+    if vulnerable:
+        # run shiftleft scan on vulnerable repositories
+        directory = "repositories/vulnerable/" + language + "/" + address.split("/")[-1]
+        project_directory = current_directory + "/" + directory
+    else:
+        # run shiftleft scan on non-vulnerable repositories
+        directory = "repositories/non-vulnerable/" + language + "/" + address.split("/")[-1]
+        project_directory = current_directory + "/" + directory
+    os.system(f"docker run --rm -e \"WORKSPACE={project_directory}\" -v {project_directory}:/app shiftleft/scan scan --local-only")
+
+
+def create_codeql_databases(language):
+    """
+    create codeql databases
+    :param language: programming language of the repository
+    :return: None
+    """
+    os.system('''docker run --rm --name codeql-docker -v "/tmp/src:/opt/src" -v "/tmp/results:/opt/results" -e "LANGUAGE=go" j3ssie/codeql-docker:latest''')
+
+# def run_codeql_scan(vulnerable, language, address):
+#     """
+#     run codeql scan on repository
+#     :param vulnerable: True if repository is vulnerable, False if repository is non-vulnerable
+#     :param language: programming language of the repository
+#     :param address: git repository address
+#     :return: None
+#     """
+#     current_directory = os.getcwd()
+#     # run codeql scan on repositories
+#     if vulnerable:
+#         # run codeql scan on vulnerable repositories
+#         directory = "repositories/vulnerable/" + language + "/" + address.split("/")[-1]
+#         project_directory = current_directory + "/" + directory
+#     else:
+#         # run codeql scan on non-vulnerable repositories
+#         directory = "repositories/non-vulnerable/" + language + "/" + address.split("/")[-1]
+#         project_directory = current_directory + "/" + directory
+#     os.system(f"codeql database create {project_directory} --language={language}")
+#     os.system(f"codeql database analyze {project_directory} codeql-{language}-code-scanning.qls --format=csv --output={project_directory}/codeql-results.csv")
 
 print_info("Updating git repositories")
+if __name__ == '__main__':
+    # update vulnerable repositories
+    for language in configurations["vulnerable"]:
+        print_info("Updating vulnerable repositories for language {}".format(language))
+        for repository in configurations["vulnerable"][language]:
+            print_info("Updating vulnerable repository: {}".format( repository))
+            multiprocess_worker(update_git_repositories, (True, language, repository))
+            
 
-# update vulnerable repositories
-for language in configurations["vulnerable"]:
-    print_info("Updating vulnerable repositories for language {}".format(language))
-    for repository in configurations["vulnerable"][language]:
-        print_info("Updating vulnerable repository: {}".format( repository))
-        update_git_repositories(True, language, repository)
+    # update non-vulnerable repositories
+    for language in configurations["non-vulnerable"]:
+        print_info("Updating non-vulnerable repositories for language {}".format(language))
+        for repository in configurations["non-vulnerable"][language]:
+            print_info("Updating non-vulnerable repository: {}".format(repository))
+            multiprocess_worker(update_git_repositories, (False, language, repository))
+    
+    print_info("Git repositories updated successfully")
 
-# update non-vulnerable repositories
-for language in configurations["non-vulnerable"]:
-    print_info("Updating non-vulnerable repositories for language {}".format(language))
-    for repository in configurations["non-vulnerable"][language]:
-        print_info("Updating non-vulnerable repository: {}".format(repository))
-        update_git_repositories(False, language, repository)
-       
-print_info("Git repositories updated successfully")
+    # run shiftleft scan on vulnerable repositories
+    # for language in configurations["vulnerable"]:  
+    #     print_info("Running shiftleft scan on vulnerable repositories for language {}".format(language))
+    #     for repository in configurations["vulnerable"][language]:
+    #         print_info("Running shiftleft scan on vulnerable repository: {}".format(repository))
+    #         multiprocess_worker(run_shiftleft_scan, (True, language, repository))
+    #         # initial test break early
+    #         break
+    
+    # run shiftleft scan on non-vulnerable repositories
+    # for language in configurations["non-vulnerable"]:
+    #     print_info("Running shiftleft scan on non-vulnerable repositories for language {}".format(language))
+    #     for repository in configurations["non-vulnerable"][language]:
+    #         print_info("Running shiftleft scan on non-vulnerable repository: {}".format(repository))
+    #         multiprocess_worker(run_shiftleft_scan, (False, language, repository))
+    
+    while True:
+        for process in processes:
+            if not process.is_alive():
+                processes.remove(process)
+        if not processes:
+            break
+        time.sleep(0.1)
+
+    # print_info("Shiftleft scan completed successfully")
+    # for shiftleft_report in glob.glob('./repositories/*/*/*/reports', recursive=True):
+    #     vulnerable = shiftleft_report.split("/")[2]
+    #     language = shiftleft_report.split("/")[3]
+    #     repository = shiftleft_report.split("/")[4]
+    #     os.system("rm -rf scan_results/shiftleft_scan/" + vulnerable + "/" + language + "/" + repository)
+    #     os.system("mkdir -p scan_results/shiftleft_scan/" + vulnerable + "/" + language + "/" + repository)
+    #     os.system("mv " + shiftleft_report + "/* scan_results/shiftleft_scan/" + vulnerable + "/" + language + "/" + repository + "/")
+
+    print_info("starting codeql scan")
+    list_of_compiled_languages= os.popen('''docker run --rm --name codeql-container -it --entrypoint /bin/bash mcr.microsoft.com/cstsectools/codeql-container -c "codeql resolve languages"''').read()
+    list_of_compiled_languages = [language for language in list_of_compiled_languages.split("\n").split()[0]]
+    print(list_of_compiled_languages)

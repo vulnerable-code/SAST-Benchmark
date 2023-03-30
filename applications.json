@@ -4,7 +4,8 @@
             "https://github.com/hardik05/Damn_Vulnerable_C_Program",
             "https://github.com/conikeec/seeve",
             "https://github.com/atxsinn3r/VulnCases",
-            "https://github.com/patricia-gallardo/insecure-coding-examples"
+            "https://github.com/patricia-gallardo/insecure-coding-examples",
+            "https://github.com/ongamse/shiftleft-c-demo"
         ],
         "CSharp": [
             "https://github.com/appsecco/dvcsharp-api",
@@ -36,7 +37,7 @@
             "https://github.com/B3nac/InjuredAndroid",
             "https://github.com/miguelfreitas93/KotlinGoat"
         ],
-        "JS/TS": [
+        "JS_TS": [
             "https://github.com/cr0hn/vulnerable-node",
             "https://github.com/laztname/SVWA",
             "https://github.com/srcclr/example-javascript-vulnerable-methods",
@@ -47,7 +48,8 @@
             "https://github.com/OpenZeppelin/damn-vulnerable-defi",
             "https://github.com/juice-shop/juice-shop",
             "https://github.com/djadmin/vulnerable-app",
-            "https://github.com/DamnVulnerableCryptoApp/DamnVulnerableCryptoApp"
+            "https://github.com/DamnVulnerableCryptoApp/DamnVulnerableCryptoApp",
+            "https://github.com/ShiftLeftSecurity/shiftleft-js-demo"
         ],
         "Python": [
             "https://github.com/anil-yelken/Vulnerable-Flask-App",
@@ -58,7 +60,8 @@
             "https://github.com/xNaaro/vulnerable_python",
             "https://github.com/adeyosemanputra/pygoat",
             "https://github.com/nexB/vulnerablecode",
-            "https://github.com/Contrast-Security-OSS/vulnpy"
+            "https://github.com/Contrast-Security-OSS/vulnpy",
+            "https://github.com/ongamse/shiftleft-python-demo"
         ],
         "Ruby": [
             "https://github.com/OWASP/railsgoat",
@@ -92,7 +95,6 @@
     "non-vulnerable": {
         "C_CPP": [
             "https://github.com/FLIF-hub/FLIF",
-            "https://github.com/NVIDIAGameWorks/PhysX-3.4",
             "https://github.com/milostosic/MTuner",
             "https://github.com/acaudwell/Logstalgia",
             "https://github.com/MrKepzie/Natron",
@@ -136,7 +138,7 @@
             "https://github.com/fossasia/open-event-attendee-android",
             "https://github.com/nekocode/create-android-kotlin-app"
         ],
-        "JS/TS": [
+        "JS_TS": [
             "https://github.com/OWASP/threat-dragon",
             "https://github.com/Nickersoft/push.js",
             "https://github.com/dat-ecosystem-archive/dat",
