@@ -1,0 +1,4170 @@
+{
+    "check_type": "terraform",
+    "results": {
+        "failed_checks": [
+            {
+                "check_id": "CKV_AZURE_10",
+                "bc_check_id": null,
+                "check_name": "Ensure that SSH access is restricted from the internet",
+                "check_result": {
+                    "result": "FAILED",
+                    "evaluated_keys": [
+                        "security_rule/[1]/access",
+                        "security_rule/[1]/direction",
+                        "security_rule/[1]/protocol",
+                        "security_rule/[1]/destination_port_range",
+                        "security_rule/[1]/destination_port_ranges",
+                        "security_rule/[1]/source_address_prefix",
+                        "security_rule/[1]/source_address_prefixes"
+                    ]
+                },
+                "code_block": [
+                    [
+                        23,
+                        "resource \"azurerm_network_security_group\" \"tf-ansible-sg\" {\n"
+                    ],
+                    [
+                        24,
+                        "  name                = \"${var.prefix}-sg\"\n"
+                    ],
+                    [
+                        25,
+                        "  location            = \"${var.location}\"\n"
+                    ],
+                    [
+                        26,
+                        "  resource_group_name = \"${azurerm_resource_group.terraform_ansible.name}\"\n"
+                    ],
+                    [
+                        27,
+                        "\n"
+                    ],
+                    [
+                        28,
+                        "  security_rule {\n"
+                    ],
+                    [
+                        29,
+                        "    name                       = \"HTTP\"\n"
+                    ],
+                    [
+                        30,
+                        "    priority                   = 100\n"
+                    ],
+                    [
+                        31,
+                        "    direction                  = \"Inbound\"\n"
+                    ],
+                    [
+                        32,
+                        "    access                     = \"Allow\"\n"
+                    ],
+                    [
+                        33,
+                        "    protocol                   = \"Tcp\"\n"
+                    ],
+                    [
+                        34,
+                        "    source_port_range          = \"*\"\n"
+                    ],
+                    [
+                        35,
+                        "    destination_port_range     = \"80\"\n"
+                    ],
+                    [
+                        36,
+                        "    source_address_prefix      = \"*\"\n"
+                    ],
+                    [
+                        37,
+                        "    destination_address_prefix = \"*\"\n"
+                    ],
+                    [
+                        38,
+                        "  }\n"
+                    ],
+                    [
+                        39,
+                        "\n"
+                    ],
+                    [
+                        40,
+                        "  security_rule {\n"
+                    ],
+                    [
+                        41,
+                        "    name                       = \"SSH\"\n"
+                    ],
+                    [
+                        42,
+                        "    priority                   = 101\n"
+                    ],
+                    [
+                        43,
+                        "    direction                  = \"Inbound\"\n"
+                    ],
+                    [
+                        44,
+                        "    access                     = \"Allow\"\n"
+                    ],
+                    [
+                        45,
+                        "    protocol                   = \"Tcp\"\n"
+                    ],
+                    [
+                        46,
+                        "    source_port_range          = \"*\"\n"
+                    ],
+                    [
+                        47,
+                        "    destination_port_range     = \"22\"\n"
+                    ],
+                    [
+                        48,
+                        "    source_address_prefix      = \"*\"\n"
+                    ],
+                    [
+                        49,
+                        "    destination_address_prefix = \"*\"\n"
+                    ],
+                    [
+                        50,
+                        "  }\n"
+                    ],
+                    [
+                        51,
+                        "}\n"
+                    ]
+                ],
+                "file_path": "/terraform_azure/main.tf",
+                "file_abs_path": "/app/terraform_azure/main.tf",
+                "repo_file_path": "/terraform_azure/main.tf",
+                "file_line_range": [
+                    23,
+                    51
+                ],
+                "resource": "azurerm_network_security_group.tf-ansible-sg",
+                "evaluations": null,
+                "check_class": "checkov.terraform.checks.resource.azure.NSGRuleSSHAccessRestricted",
+                "fixed_definition": null,
+                "entity_tags": null,
+                "caller_file_path": null,
+                "caller_file_line_range": null,
+                "resource_address": null,
+                "severity": null,
+                "bc_category": null,
+                "benchmarks": {},
+                "description": null,
+                "short_description": null,
+                "vulnerability_details": null,
+                "connected_node": null,
+                "guideline": null,
+                "details": [],
+                "breadcrumbs": {
+                    "name": [
+                        {
+                            "type": "variable",
+                            "name": "prefix",
+                            "path": "/app/terraform_azure/variables.tf",
+                            "module_connection": false
+                        }
+                    ],
+                    "location": [
+                        {
+                            "type": "variable",
+                            "name": "location",
+                            "path": "/app/terraform_azure/variables.tf",
+                            "module_connection": false
+                        }
+                    ],
+                    "resource_group_name": [
+                        {
+                            "type": "variable",
+                            "name": "resource_group",
+                            "path": "/app/terraform_azure/variables.tf",
+                            "module_connection": false
+                        },
+                        {
+                            "type": "resource",
+                            "name": "azurerm_resource_group.terraform_ansible",
+                            "path": "/app/terraform_azure/main.tf",
+                            "module_connection": false
+                        }
+                    ]
+                }
+            },
+            {
+                "check_id": "CKV_AZURE_160",
+                "bc_check_id": null,
+                "check_name": "Ensure that HTTP (port 80) access is restricted from the internet",
+                "check_result": {
+                    "result": "FAILED",
+                    "evaluated_keys": [
+                        "security_rule/[0]/access",
+                        "security_rule/[0]/direction",
+                        "security_rule/[0]/protocol",
+                        "security_rule/[0]/destination_port_range",
+                        "security_rule/[0]/destination_port_ranges",
+                        "security_rule/[0]/source_address_prefix",
+                        "security_rule/[0]/source_address_prefixes"
+                    ]
+                },
+                "code_block": [
+                    [
+                        23,
+                        "resource \"azurerm_network_security_group\" \"tf-ansible-sg\" {\n"
+                    ],
+                    [
+                        24,
+                        "  name                = \"${var.prefix}-sg\"\n"
+                    ],
+                    [
+                        25,
+                        "  location            = \"${var.location}\"\n"
+                    ],
+                    [
+                        26,
+                        "  resource_group_name = \"${azurerm_resource_group.terraform_ansible.name}\"\n"
+                    ],
+                    [
+                        27,
+                        "\n"
+                    ],
+                    [
+                        28,
+                        "  security_rule {\n"
+                    ],
+                    [
+                        29,
+                        "    name                       = \"HTTP\"\n"
+                    ],
+                    [
+                        30,
+                        "    priority                   = 100\n"
+                    ],
+                    [
+                        31,
+                        "    direction                  = \"Inbound\"\n"
+                    ],
+                    [
+                        32,
+                        "    access                     = \"Allow\"\n"
+                    ],
+                    [
+                        33,
+                        "    protocol                   = \"Tcp\"\n"
+                    ],
+                    [
+                        34,
+                        "    source_port_range          = \"*\"\n"
+                    ],
+                    [
+                        35,
+                        "    destination_port_range     = \"80\"\n"
+                    ],
+                    [
+                        36,
+                        "    source_address_prefix      = \"*\"\n"
+                    ],
+                    [
+                        37,
+                        "    destination_address_prefix = \"*\"\n"
+                    ],
+                    [
+                        38,
+                        "  }\n"
+                    ],
+                    [
+                        39,
+                        "\n"
+                    ],
+                    [
+                        40,
+                        "  security_rule {\n"
+                    ],
+                    [
+                        41,
+                        "    name                       = \"SSH\"\n"
+                    ],
+                    [
+                        42,
+                        "    priority                   = 101\n"
+                    ],
+                    [
+                        43,
+                        "    direction                  = \"Inbound\"\n"
+                    ],
+                    [
+                        44,
+                        "    access                     = \"Allow\"\n"
+                    ],
+                    [
+                        45,
+                        "    protocol                   = \"Tcp\"\n"
+                    ],
+                    [
+                        46,
+                        "    source_port_range          = \"*\"\n"
+                    ],
+                    [
+                        47,
+                        "    destination_port_range     = \"22\"\n"
+                    ],
+                    [
+                        48,
+                        "    source_address_prefix      = \"*\"\n"
+                    ],
+                    [
+                        49,
+                        "    destination_address_prefix = \"*\"\n"
+                    ],
+                    [
+                        50,
+                        "  }\n"
+                    ],
+                    [
+                        51,
+                        "}\n"
+                    ]
+                ],
+                "file_path": "/terraform_azure/main.tf",
+                "file_abs_path": "/app/terraform_azure/main.tf",
+                "repo_file_path": "/terraform_azure/main.tf",
+                "file_line_range": [
+                    23,
+                    51
+                ],
+                "resource": "azurerm_network_security_group.tf-ansible-sg",
+                "evaluations": null,
+                "check_class": "checkov.terraform.checks.resource.azure.NSGRuleHTTPAccessRestricted",
+                "fixed_definition": null,
+                "entity_tags": null,
+                "caller_file_path": null,
+                "caller_file_line_range": null,
+                "resource_address": null,
+                "severity": null,
+                "bc_category": null,
+                "benchmarks": {},
+                "description": null,
+                "short_description": null,
+                "vulnerability_details": null,
+                "connected_node": null,
+                "guideline": null,
+                "details": [],
+                "breadcrumbs": {
+                    "name": [
+                        {
+                            "type": "variable",
+                            "name": "prefix",
+                            "path": "/app/terraform_azure/variables.tf",
+                            "module_connection": false
+                        }
+                    ],
+                    "location": [
+                        {
+                            "type": "variable",
+                            "name": "location",
+                            "path": "/app/terraform_azure/variables.tf",
+                            "module_connection": false
+                        }
+                    ],
+                    "resource_group_name": [
+                        {
+                            "type": "variable",
+                            "name": "resource_group",
+                            "path": "/app/terraform_azure/variables.tf",
+                            "module_connection": false
+                        },
+                        {
+                            "type": "resource",
+                            "name": "azurerm_resource_group.terraform_ansible",
+                            "path": "/app/terraform_azure/main.tf",
+                            "module_connection": false
+                        }
+                    ]
+                }
+            },
+            {
+                "check_id": "CKV_GCP_30",
+                "bc_check_id": null,
+                "check_name": "Ensure that instances are not configured to use the default service account",
+                "check_result": {
+                    "result": "FAILED",
+                    "evaluated_keys": [
+                        "service_account/[0]/email",
+                        "name"
+                    ]
+                },
+                "code_block": [
+                    [
+                        7,
+                        "resource \"google_compute_instance\" \"tfansible\" {\n"
+                    ],
+                    [
+                        8,
+                        "  name         = \"terraform-ansible\"\n"
+                    ],
+                    [
+                        9,
+                        "  machine_type = \"n1-standard-1\"\n"
+                    ],
+                    [
+                        10,
+                        "  zone         = \"us-central1-a\"\n"
+                    ],
+                    [
+                        11,
+                        "\n"
+                    ],
+                    [
+                        12,
+                        "  tags = [\"web\"]\n"
+                    ],
+                    [
+                        13,
+                        "\n"
+                    ],
+                    [
+                        14,
+                        "  boot_disk {\n"
+                    ],
+                    [
+                        15,
+                        "    initialize_params {\n"
+                    ],
+                    [
+                        16,
+                        "      image = \"rhel-cloud/rhel-7\"\n"
+                    ],
+                    [
+                        17,
+                        "    }\n"
+                    ],
+                    [
+                        18,
+                        "  }\n"
+                    ],
+                    [
+                        19,
+                        "\n"
+                    ],
+                    [
+                        20,
+                        "  // Local SSD disk\n"
+                    ],
+                    [
+                        21,
+                        "  scratch_disk {}\n"
+                    ],
+                    [
+                        22,
+                        "\n"
+                    ],
+                    [
+                        23,
+                        "  network_interface {\n"
+                    ],
+                    [
+                        24,
+                        "    network = \"default\"\n"
+                    ],
+                    [
+                        25,
+                        "\n"
+                    ],
+                    [
+                        26,
+                        "    access_config {\n"
+                    ],
+                    [
+                        27,
+                        "      // Ephemeral IP\n"
+                    ],
+                    [
+                        28,
+                        "    }\n"
+                    ],
+                    [
+                        29,
+                        "  }\n"
+                    ],
+                    [
+                        30,
+                        "\n"
+                    ],
+                    [
+                        31,
+                        "  metadata {\n"
+                    ],
+                    [
+                        32,
+                        "    Name     = \"Terraform and Ansible Demo\"\n"
+                    ],
+                    [
+                        33,
+                        "    ssh-keys = \"${var.ssh_user}:${file(\"${var.public_key_path}\")}\"\n"
+                    ],
+                    [
+                        34,
+                        "  }\n"
+                    ],
+                    [
+                        35,
+                        "\n"
+                    ],
+                    [
+                        36,
+                        "  metadata_startup_script = \"echo hi > /test.txt\"\n"
+                    ],
+                    [
+                        37,
+                        "\n"
+                    ],
+                    [
+                        38,
+                        "  service_account {\n"
+                    ],
+                    [
+                        39,
+                        "    scopes = [\"userinfo-email\", \"compute-ro\", \"storage-ro\"]\n"
+                    ],
+                    [
+                        40,
+                        "  }\n"
+                    ],
+                    [
+                        41,
+                        "\n"
+                    ],
+                    [
+                        42,
+                        "  #############################################################################\n"
+                    ],
+                    [
+                        43,
+                        "  # This is the 'local exec' method.  \n"
+                    ],
+                    [
+                        44,
+                        "  # Ansible runs from the same host you run Terraform from\n"
+                    ],
+                    [
+                        45,
+                        "  #############################################################################\n"
+                    ],
+                    [
+                        46,
+                        "\n"
+                    ],
+                    [
+                        47,
+                        "  provisioner \"remote-exec\" {\n"
+                    ],
+                    [
+                        48,
+                        "    inline = [\"echo 'Hello World'\"]\n"
+                    ],
+                    [
+                        49,
+                        "\n"
+                    ],
+                    [
+                        50,
+                        "    connection {\n"
+                    ],
+                    [
+                        51,
+                        "      type        = \"ssh\"\n"
+                    ],
+                    [
+                        52,
+                        "      user        = \"${var.ssh_user}\"\n"
+                    ],
+                    [
+                        53,
+                        "      private_key = \"${file(\"${var.private_key_path}\")}\"\n"
+                    ],
+                    [
+                        54,
+                        "    }\n"
+                    ],
+                    [
+                        55,
+                        "  }\n"
+                    ],
+                    [
+                        56,
+                        "  provisioner \"local-exec\" {\n"
+                    ],
+                    [
+                        57,
+                        "    command = \"ansible-playbook -i '${google_compute_instance.tfansible.network_interface.0.access_config.0.assigned_nat_ip},' --private-key ${var.private_key_path} ../ansible/httpd.yml\"\n"
+                    ],
+                    [
+                        58,
+                        "  }\n"
+                    ],
+                    [
+                        59,
+                        "\n"
+                    ],
+                    [
+                        60,
+                        "  #############################################################################\n"
+                    ],
+                    [
+                        61,
+                        "  # This is the 'remote exec' method.  \n"
+                    ],
+                    [
+                        62,
+                        "  # Ansible runs on the target host.\n"
+                    ],
+                    [
+                        63,
+                        "  #############################################################################\n"
+                    ],
+                    [
+                        64,
+                        "\n"
+                    ],
+                    [
+                        65,
+                        "  # provisioner \"remote-exec\" {\n"
+                    ],
+                    [
+                        66,
+                        "  #   inline = [\n"
+                    ],
+                    [
+                        67,
+                        "  #     \"mkdir /home/${var.ssh_user}/files\",\n"
+                    ],
+                    [
+                        68,
+                        "  #     \"mkdir /home/${var.ssh_user}/ansible\",\n"
+                    ],
+                    [
+                        69,
+                        "  #   ]\n"
+                    ],
+                    [
+                        70,
+                        "\n"
+                    ],
+                    [
+                        71,
+                        "  #   connection {\n"
+                    ],
+                    [
+                        72,
+                        "  #     type        = \"ssh\"\n"
+                    ],
+                    [
+                        73,
+                        "  #     user        = \"${var.ssh_user}\"\n"
+                    ],
+                    [
+                        74,
+                        "  #     private_key = \"${file(\"${var.private_key_path}\")}\"\n"
+                    ],
+                    [
+                        75,
+                        "  #   }\n"
+                    ],
+                    [
+                        76,
+                        "  # }\n"
+                    ],
+                    [
+                        77,
+                        "  # provisioner \"file\" {\n"
+                    ],
+                    [
+                        78,
+                        "  #   source      = \"../ansible/httpd.yml\"\n"
+                    ],
+                    [
+                        79,
+                        "  #   destination = \"/home/${var.ssh_user}/ansible/httpd.yml\"\n"
+                    ],
+                    [
+                        80,
+                        "\n"
+                    ],
+                    [
+                        81,
+                        "  #   connection {\n"
+                    ],
+                    [
+                        82,
+                        "  #     type        = \"ssh\"\n"
+                    ],
+                    [
+                        83,
+                        "  #     user        = \"${var.ssh_user}\"\n"
+                    ],
+                    [
+                        84,
+                        "  #     private_key = \"${file(\"${var.private_key_path}\")}\"\n"
+                    ],
+                    [
+                        85,
+                        "  #   }\n"
+                    ],
+                    [
+                        86,
+                        "  # }\n"
+                    ],
+                    [
+                        87,
+                        "  # provisioner \"file\" {\n"
+                    ],
+                    [
+                        88,
+                        "  #   source      = \"../files/index.j2\"\n"
+                    ],
+                    [
+                        89,
+                        "  #   destination = \"/home/${var.ssh_user}/files/index.j2\"\n"
+                    ],
+                    [
+                        90,
+                        "\n"
+                    ],
+                    [
+                        91,
+                        "  #   connection {\n"
+                    ],
+                    [
+                        92,
+                        "  #     type        = \"ssh\"\n"
+                    ],
+                    [
+                        93,
+                        "  #     user        = \"${var.ssh_user}\"\n"
+                    ],
+                    [
+                        94,
+                        "  #     private_key = \"${file(\"${var.private_key_path}\")}\"\n"
+                    ],
+                    [
+                        95,
+                        "  #   }\n"
+                    ],
+                    [
+                        96,
+                        "  # }\n"
+                    ],
+                    [
+                        97,
+                        "  # provisioner \"remote-exec\" {\n"
+                    ],
+                    [
+                        98,
+                        "  #   inline = [\n"
+                    ],
+                    [
+                        99,
+                        "  #     \"sudo yum -y install ansible\",\n"
+                    ],
+                    [
+                        100,
+                        "  #     \"cd ansible; ansible-playbook -c local -i \\\"localhost,\\\" httpd.yml\",\n"
+                    ],
+                    [
+                        101,
+                        "  #   ]\n"
+                    ],
+                    [
+                        102,
+                        "\n"
+                    ],
+                    [
+                        103,
+                        "  #   connection {\n"
+                    ],
+                    [
+                        104,
+                        "  #     type        = \"ssh\"\n"
+                    ],
+                    [
+                        105,
+                        "  #     user        = \"${var.ssh_user}\"\n"
+                    ],
+                    [
+                        106,
+                        "  #     private_key = \"${file(\"${var.private_key_path}\")}\"\n"
+                    ],
+                    [
+                        107,
+                        "  #   }\n"
+                    ],
+                    [
+                        108,
+                        "  # }\n"
+                    ],
+                    [
+                        109,
+                        "  # Don't comment out this next line.\n"
+                    ],
+                    [
+                        110,
+                        "}\n"
+                    ]
+                ],
+                "file_path": "/terraform_gcp/main.tf",
+                "file_abs_path": "/app/terraform_gcp/main.tf",
+                "repo_file_path": "/terraform_gcp/main.tf",
+                "file_line_range": [
+                    7,
+                    110
+                ],
+                "resource": "google_compute_instance.tfansible",
+                "evaluations": null,
+                "check_class": "checkov.terraform.checks.resource.gcp.GoogleComputeDefaultServiceAccount",
+                "fixed_definition": null,
+                "entity_tags": null,
+                "caller_file_path": null,
+                "caller_file_line_range": null,
+                "resource_address": null,
+                "severity": null,
+                "bc_category": null,
+                "benchmarks": {},
+                "description": null,
+                "short_description": null,
+                "vulnerability_details": null,
+                "connected_node": null,
+                "guideline": null,
+                "details": [],
+                "breadcrumbs": {
+                    "metadata.ssh-keys": [
+                        {
+                            "type": "variable",
+                            "name": "ssh_user",
+                            "path": "/app/terraform_gcp/variables.tf",
+                            "module_connection": false
+                        }
+                    ],
+                    "provisioner/remote-exec.connection.private_key": [
+                        {
+                            "type": "variable",
+                            "name": "private_key_path",
+                            "path": "/app/terraform_gcp/variables.tf",
+                            "module_connection": false
+                        }
+                    ],
+                    "provisioner/remote-exec.connection": [
+                        {
+                            "type": "variable",
+                            "name": "ssh_user",
+                            "path": "/app/terraform_gcp/variables.tf",
+                            "module_connection": false
+                        }
+                    ],
+                    "provisioner/local-exec.command": [
+                        {
+                            "type": "variable",
+                            "name": "private_key_path",
+                            "path": "/app/terraform_gcp/variables.tf",
+                            "module_connection": false
+                        }
+                    ],
+                    "provisioner/remote-exec.connection.user": [
+                        {
+                            "type": "variable",
+                            "name": "ssh_user",
+                            "path": "/app/terraform_gcp/variables.tf",
+                            "module_connection": false
+                        }
+                    ]
+                }
+            },
+            {
+                "check_id": "CKV_GCP_39",
+                "bc_check_id": null,
+                "check_name": "Ensure Compute instances are launched with Shielded VM enabled",
+                "check_result": {
+                    "result": "FAILED",
+                    "evaluated_keys": []
+                },
+                "code_block": [
+                    [
+                        7,
+                        "resource \"google_compute_instance\" \"tfansible\" {\n"
+                    ],
+                    [
+                        8,
+                        "  name         = \"terraform-ansible\"\n"
+                    ],
+                    [
+                        9,
+                        "  machine_type = \"n1-standard-1\"\n"
+                    ],
+                    [
+                        10,
+                        "  zone         = \"us-central1-a\"\n"
+                    ],
+                    [
+                        11,
+                        "\n"
+                    ],
+                    [
+                        12,
+                        "  tags = [\"web\"]\n"
+                    ],
+                    [
+                        13,
+                        "\n"
+                    ],
+                    [
+                        14,
+                        "  boot_disk {\n"
+                    ],
+                    [
+                        15,
+                        "    initialize_params {\n"
+                    ],
+                    [
+                        16,
+                        "      image = \"rhel-cloud/rhel-7\"\n"
+                    ],
+                    [
+                        17,
+                        "    }\n"
+                    ],
+                    [
+                        18,
+                        "  }\n"
+                    ],
+                    [
+                        19,
+                        "\n"
+                    ],
+                    [
+                        20,
+                        "  // Local SSD disk\n"
+                    ],
+                    [
+                        21,
+                        "  scratch_disk {}\n"
+                    ],
+                    [
+                        22,
+                        "\n"
+                    ],
+                    [
+                        23,
+                        "  network_interface {\n"
+                    ],
+                    [
+                        24,
+                        "    network = \"default\"\n"
+                    ],
+                    [
+                        25,
+                        "\n"
+                    ],
+                    [
+                        26,
+                        "    access_config {\n"
+                    ],
+                    [
+                        27,
+                        "      // Ephemeral IP\n"
+                    ],
+                    [
+                        28,
+                        "    }\n"
+                    ],
+                    [
+                        29,
+                        "  }\n"
+                    ],
+                    [
+                        30,
+                        "\n"
+                    ],
+                    [
+                        31,
+                        "  metadata {\n"
+                    ],
+                    [
+                        32,
+                        "    Name     = \"Terraform and Ansible Demo\"\n"
+                    ],
+                    [
+                        33,
+                        "    ssh-keys = \"${var.ssh_user}:${file(\"${var.public_key_path}\")}\"\n"
+                    ],
+                    [
+                        34,
+                        "  }\n"
+                    ],
+                    [
+                        35,
+                        "\n"
+                    ],
+                    [
+                        36,
+                        "  metadata_startup_script = \"echo hi > /test.txt\"\n"
+                    ],
+                    [
+                        37,
+                        "\n"
+                    ],
+                    [
+                        38,
+                        "  service_account {\n"
+                    ],
+                    [
+                        39,
+                        "    scopes = [\"userinfo-email\", \"compute-ro\", \"storage-ro\"]\n"
+                    ],
+                    [
+                        40,
+                        "  }\n"
+                    ],
+                    [
+                        41,
+                        "\n"
+                    ],
+                    [
+                        42,
+                        "  #############################################################################\n"
+                    ],
+                    [
+                        43,
+                        "  # This is the 'local exec' method.  \n"
+                    ],
+                    [
+                        44,
+                        "  # Ansible runs from the same host you run Terraform from\n"
+                    ],
+                    [
+                        45,
+                        "  #############################################################################\n"
+                    ],
+                    [
+                        46,
+                        "\n"
+                    ],
+                    [
+                        47,
+                        "  provisioner \"remote-exec\" {\n"
+                    ],
+                    [
+                        48,
+                        "    inline = [\"echo 'Hello World'\"]\n"
+                    ],
+                    [
+                        49,
+                        "\n"
+                    ],
+                    [
+                        50,
+                        "    connection {\n"
+                    ],
+                    [
+                        51,
+                        "      type        = \"ssh\"\n"
+                    ],
+                    [
+                        52,
+                        "      user        = \"${var.ssh_user}\"\n"
+                    ],
+                    [
+                        53,
+                        "      private_key = \"${file(\"${var.private_key_path}\")}\"\n"
+                    ],
+                    [
+                        54,
+                        "    }\n"
+                    ],
+                    [
+                        55,
+                        "  }\n"
+                    ],
+                    [
+                        56,
+                        "  provisioner \"local-exec\" {\n"
+                    ],
+                    [
+                        57,
+                        "    command = \"ansible-playbook -i '${google_compute_instance.tfansible.network_interface.0.access_config.0.assigned_nat_ip},' --private-key ${var.private_key_path} ../ansible/httpd.yml\"\n"
+                    ],
+                    [
+                        58,
+                        "  }\n"
+                    ],
+                    [
+                        59,
+                        "\n"
+                    ],
+                    [
+                        60,
+                        "  #############################################################################\n"
+                    ],
+                    [
+                        61,
+                        "  # This is the 'remote exec' method.  \n"
+                    ],
+                    [
+                        62,
+                        "  # Ansible runs on the target host.\n"
+                    ],
+                    [
+                        63,
+                        "  #############################################################################\n"
+                    ],
+                    [
+                        64,
+                        "\n"
+                    ],
+                    [
+                        65,
+                        "  # provisioner \"remote-exec\" {\n"
+                    ],
+                    [
+                        66,
+                        "  #   inline = [\n"
+                    ],
+                    [
+                        67,
+                        "  #     \"mkdir /home/${var.ssh_user}/files\",\n"
+                    ],
+                    [
+                        68,
+                        "  #     \"mkdir /home/${var.ssh_user}/ansible\",\n"
+                    ],
+                    [
+                        69,
+                        "  #   ]\n"
+                    ],
+                    [
+                        70,
+                        "\n"
+                    ],
+                    [
+                        71,
+                        "  #   connection {\n"
+                    ],
+                    [
+                        72,
+                        "  #     type        = \"ssh\"\n"
+                    ],
+                    [
+                        73,
+                        "  #     user        = \"${var.ssh_user}\"\n"
+                    ],
+                    [
+                        74,
+                        "  #     private_key = \"${file(\"${var.private_key_path}\")}\"\n"
+                    ],
+                    [
+                        75,
+                        "  #   }\n"
+                    ],
+                    [
+                        76,
+                        "  # }\n"
+                    ],
+                    [
+                        77,
+                        "  # provisioner \"file\" {\n"
+                    ],
+                    [
+                        78,
+                        "  #   source      = \"../ansible/httpd.yml\"\n"
+                    ],
+                    [
+                        79,
+                        "  #   destination = \"/home/${var.ssh_user}/ansible/httpd.yml\"\n"
+                    ],
+                    [
+                        80,
+                        "\n"
+                    ],
+                    [
+                        81,
+                        "  #   connection {\n"
+                    ],
+                    [
+                        82,
+                        "  #     type        = \"ssh\"\n"
+                    ],
+                    [
+                        83,
+                        "  #     user        = \"${var.ssh_user}\"\n"
+                    ],
+                    [
+                        84,
+                        "  #     private_key = \"${file(\"${var.private_key_path}\")}\"\n"
+                    ],
+                    [
+                        85,
+                        "  #   }\n"
+                    ],
+                    [
+                        86,
+                        "  # }\n"
+                    ],
+                    [
+                        87,
+                        "  # provisioner \"file\" {\n"
+                    ],
+                    [
+                        88,
+                        "  #   source      = \"../files/index.j2\"\n"
+                    ],
+                    [
+                        89,
+                        "  #   destination = \"/home/${var.ssh_user}/files/index.j2\"\n"
+                    ],
+                    [
+                        90,
+                        "\n"
+                    ],
+                    [
+                        91,
+                        "  #   connection {\n"
+                    ],
+                    [
+                        92,
+                        "  #     type        = \"ssh\"\n"
+                    ],
+                    [
+                        93,
+                        "  #     user        = \"${var.ssh_user}\"\n"
+                    ],
+                    [
+                        94,
+                        "  #     private_key = \"${file(\"${var.private_key_path}\")}\"\n"
+                    ],
+                    [
+                        95,
+                        "  #   }\n"
+                    ],
+                    [
+                        96,
+                        "  # }\n"
+                    ],
+                    [
+                        97,
+                        "  # provisioner \"remote-exec\" {\n"
+                    ],
+                    [
+                        98,
+                        "  #   inline = [\n"
+                    ],
+                    [
+                        99,
+                        "  #     \"sudo yum -y install ansible\",\n"
+                    ],
+                    [
+                        100,
+                        "  #     \"cd ansible; ansible-playbook -c local -i \\\"localhost,\\\" httpd.yml\",\n"
+                    ],
+                    [
+                        101,
+                        "  #   ]\n"
+                    ],
+                    [
+                        102,
+                        "\n"
+                    ],
+                    [
+                        103,
+                        "  #   connection {\n"
+                    ],
+                    [
+                        104,
+                        "  #     type        = \"ssh\"\n"
+                    ],
+                    [
+                        105,
+                        "  #     user        = \"${var.ssh_user}\"\n"
+                    ],
+                    [
+                        106,
+                        "  #     private_key = \"${file(\"${var.private_key_path}\")}\"\n"
+                    ],
+                    [
+                        107,
+                        "  #   }\n"
+                    ],
+                    [
+                        108,
+                        "  # }\n"
+                    ],
+                    [
+                        109,
+                        "  # Don't comment out this next line.\n"
+                    ],
+                    [
+                        110,
+                        "}\n"
+                    ]
+                ],
+                "file_path": "/terraform_gcp/main.tf",
+                "file_abs_path": "/app/terraform_gcp/main.tf",
+                "repo_file_path": "/terraform_gcp/main.tf",
+                "file_line_range": [
+                    7,
+                    110
+                ],
+                "resource": "google_compute_instance.tfansible",
+                "evaluations": null,
+                "check_class": "checkov.terraform.checks.resource.gcp.GoogleComputeShieldedVM",
+                "fixed_definition": null,
+                "entity_tags": null,
+                "caller_file_path": null,
+                "caller_file_line_range": null,
+                "resource_address": null,
+                "severity": null,
+                "bc_category": null,
+                "benchmarks": {},
+                "description": null,
+                "short_description": null,
+                "vulnerability_details": null,
+                "connected_node": null,
+                "guideline": null,
+                "details": [],
+                "breadcrumbs": {
+                    "metadata.ssh-keys": [
+                        {
+                            "type": "variable",
+                            "name": "ssh_user",
+                            "path": "/app/terraform_gcp/variables.tf",
+                            "module_connection": false
+                        }
+                    ],
+                    "provisioner/remote-exec.connection.private_key": [
+                        {
+                            "type": "variable",
+                            "name": "private_key_path",
+                            "path": "/app/terraform_gcp/variables.tf",
+                            "module_connection": false
+                        }
+                    ],
+                    "provisioner/remote-exec.connection": [
+                        {
+                            "type": "variable",
+                            "name": "ssh_user",
+                            "path": "/app/terraform_gcp/variables.tf",
+                            "module_connection": false
+                        }
+                    ],
+                    "provisioner/local-exec.command": [
+                        {
+                            "type": "variable",
+                            "name": "private_key_path",
+                            "path": "/app/terraform_gcp/variables.tf",
+                            "module_connection": false
+                        }
+                    ],
+                    "provisioner/remote-exec.connection.user": [
+                        {
+                            "type": "variable",
+                            "name": "ssh_user",
+                            "path": "/app/terraform_gcp/variables.tf",
+                            "module_connection": false
+                        }
+                    ]
+                }
+            },
+            {
+                "check_id": "CKV_GCP_32",
+                "bc_check_id": null,
+                "check_name": "Ensure 'Block Project-wide SSH keys' is enabled for VM instances",
+                "check_result": {
+                    "result": "FAILED",
+                    "evaluated_keys": [
+                        "metadata/block-project-ssh-keys"
+                    ]
+                },
+                "code_block": [
+                    [
+                        7,
+                        "resource \"google_compute_instance\" \"tfansible\" {\n"
+                    ],
+                    [
+                        8,
+                        "  name         = \"terraform-ansible\"\n"
+                    ],
+                    [
+                        9,
+                        "  machine_type = \"n1-standard-1\"\n"
+                    ],
+                    [
+                        10,
+                        "  zone         = \"us-central1-a\"\n"
+                    ],
+                    [
+                        11,
+                        "\n"
+                    ],
+                    [
+                        12,
+                        "  tags = [\"web\"]\n"
+                    ],
+                    [
+                        13,
+                        "\n"
+                    ],
+                    [
+                        14,
+                        "  boot_disk {\n"
+                    ],
+                    [
+                        15,
+                        "    initialize_params {\n"
+                    ],
+                    [
+                        16,
+                        "      image = \"rhel-cloud/rhel-7\"\n"
+                    ],
+                    [
+                        17,
+                        "    }\n"
+                    ],
+                    [
+                        18,
+                        "  }\n"
+                    ],
+                    [
+                        19,
+                        "\n"
+                    ],
+                    [
+                        20,
+                        "  // Local SSD disk\n"
+                    ],
+                    [
+                        21,
+                        "  scratch_disk {}\n"
+                    ],
+                    [
+                        22,
+                        "\n"
+                    ],
+                    [
+                        23,
+                        "  network_interface {\n"
+                    ],
+                    [
+                        24,
+                        "    network = \"default\"\n"
+                    ],
+                    [
+                        25,
+                        "\n"
+                    ],
+                    [
+                        26,
+                        "    access_config {\n"
+                    ],
+                    [
+                        27,
+                        "      // Ephemeral IP\n"
+                    ],
+                    [
+                        28,
+                        "    }\n"
+                    ],
+                    [
+                        29,
+                        "  }\n"
+                    ],
+                    [
+                        30,
+                        "\n"
+                    ],
+                    [
+                        31,
+                        "  metadata {\n"
+                    ],
+                    [
+                        32,
+                        "    Name     = \"Terraform and Ansible Demo\"\n"
+                    ],
+                    [
+                        33,
+                        "    ssh-keys = \"${var.ssh_user}:${file(\"${var.public_key_path}\")}\"\n"
+                    ],
+                    [
+                        34,
+                        "  }\n"
+                    ],
+                    [
+                        35,
+                        "\n"
+                    ],
+                    [
+                        36,
+                        "  metadata_startup_script = \"echo hi > /test.txt\"\n"
+                    ],
+                    [
+                        37,
+                        "\n"
+                    ],
+                    [
+                        38,
+                        "  service_account {\n"
+                    ],
+                    [
+                        39,
+                        "    scopes = [\"userinfo-email\", \"compute-ro\", \"storage-ro\"]\n"
+                    ],
+                    [
+                        40,
+                        "  }\n"
+                    ],
+                    [
+                        41,
+                        "\n"
+                    ],
+                    [
+                        42,
+                        "  #############################################################################\n"
+                    ],
+                    [
+                        43,
+                        "  # This is the 'local exec' method.  \n"
+                    ],
+                    [
+                        44,
+                        "  # Ansible runs from the same host you run Terraform from\n"
+                    ],
+                    [
+                        45,
+                        "  #############################################################################\n"
+                    ],
+                    [
+                        46,
+                        "\n"
+                    ],
+                    [
+                        47,
+                        "  provisioner \"remote-exec\" {\n"
+                    ],
+                    [
+                        48,
+                        "    inline = [\"echo 'Hello World'\"]\n"
+                    ],
+                    [
+                        49,
+                        "\n"
+                    ],
+                    [
+                        50,
+                        "    connection {\n"
+                    ],
+                    [
+                        51,
+                        "      type        = \"ssh\"\n"
+                    ],
+                    [
+                        52,
+                        "      user        = \"${var.ssh_user}\"\n"
+                    ],
+                    [
+                        53,
+                        "      private_key = \"${file(\"${var.private_key_path}\")}\"\n"
+                    ],
+                    [
+                        54,
+                        "    }\n"
+                    ],
+                    [
+                        55,
+                        "  }\n"
+                    ],
+                    [
+                        56,
+                        "  provisioner \"local-exec\" {\n"
+                    ],
+                    [
+                        57,
+                        "    command = \"ansible-playbook -i '${google_compute_instance.tfansible.network_interface.0.access_config.0.assigned_nat_ip},' --private-key ${var.private_key_path} ../ansible/httpd.yml\"\n"
+                    ],
+                    [
+                        58,
+                        "  }\n"
+                    ],
+                    [
+                        59,
+                        "\n"
+                    ],
+                    [
+                        60,
+                        "  #############################################################################\n"
+                    ],
+                    [
+                        61,
+                        "  # This is the 'remote exec' method.  \n"
+                    ],
+                    [
+                        62,
+                        "  # Ansible runs on the target host.\n"
+                    ],
+                    [
+                        63,
+                        "  #############################################################################\n"
+                    ],
+                    [
+                        64,
+                        "\n"
+                    ],
+                    [
+                        65,
+                        "  # provisioner \"remote-exec\" {\n"
+                    ],
+                    [
+                        66,
+                        "  #   inline = [\n"
+                    ],
+                    [
+                        67,
+                        "  #     \"mkdir /home/${var.ssh_user}/files\",\n"
+                    ],
+                    [
+                        68,
+                        "  #     \"mkdir /home/${var.ssh_user}/ansible\",\n"
+                    ],
+                    [
+                        69,
+                        "  #   ]\n"
+                    ],
+                    [
+                        70,
+                        "\n"
+                    ],
+                    [
+                        71,
+                        "  #   connection {\n"
+                    ],
+                    [
+                        72,
+                        "  #     type        = \"ssh\"\n"
+                    ],
+                    [
+                        73,
+                        "  #     user        = \"${var.ssh_user}\"\n"
+                    ],
+                    [
+                        74,
+                        "  #     private_key = \"${file(\"${var.private_key_path}\")}\"\n"
+                    ],
+                    [
+                        75,
+                        "  #   }\n"
+                    ],
+                    [
+                        76,
+                        "  # }\n"
+                    ],
+                    [
+                        77,
+                        "  # provisioner \"file\" {\n"
+                    ],
+                    [
+                        78,
+                        "  #   source      = \"../ansible/httpd.yml\"\n"
+                    ],
+                    [
+                        79,
+                        "  #   destination = \"/home/${var.ssh_user}/ansible/httpd.yml\"\n"
+                    ],
+                    [
+                        80,
+                        "\n"
+                    ],
+                    [
+                        81,
+                        "  #   connection {\n"
+                    ],
+                    [
+                        82,
+                        "  #     type        = \"ssh\"\n"
+                    ],
+                    [
+                        83,
+                        "  #     user        = \"${var.ssh_user}\"\n"
+                    ],
+                    [
+                        84,
+                        "  #     private_key = \"${file(\"${var.private_key_path}\")}\"\n"
+                    ],
+                    [
+                        85,
+                        "  #   }\n"
+                    ],
+                    [
+                        86,
+                        "  # }\n"
+                    ],
+                    [
+                        87,
+                        "  # provisioner \"file\" {\n"
+                    ],
+                    [
+                        88,
+                        "  #   source      = \"../files/index.j2\"\n"
+                    ],
+                    [
+                        89,
+                        "  #   destination = \"/home/${var.ssh_user}/files/index.j2\"\n"
+                    ],
+                    [
+                        90,
+                        "\n"
+                    ],
+                    [
+                        91,
+                        "  #   connection {\n"
+                    ],
+                    [
+                        92,
+                        "  #     type        = \"ssh\"\n"
+                    ],
+                    [
+                        93,
+                        "  #     user        = \"${var.ssh_user}\"\n"
+                    ],
+                    [
+                        94,
+                        "  #     private_key = \"${file(\"${var.private_key_path}\")}\"\n"
+                    ],
+                    [
+                        95,
+                        "  #   }\n"
+                    ],
+                    [
+                        96,
+                        "  # }\n"
+                    ],
+                    [
+                        97,
+                        "  # provisioner \"remote-exec\" {\n"
+                    ],
+                    [
+                        98,
+                        "  #   inline = [\n"
+                    ],
+                    [
+                        99,
+                        "  #     \"sudo yum -y install ansible\",\n"
+                    ],
+                    [
+                        100,
+                        "  #     \"cd ansible; ansible-playbook -c local -i \\\"localhost,\\\" httpd.yml\",\n"
+                    ],
+                    [
+                        101,
+                        "  #   ]\n"
+                    ],
+                    [
+                        102,
+                        "\n"
+                    ],
+                    [
+                        103,
+                        "  #   connection {\n"
+                    ],
+                    [
+                        104,
+                        "  #     type        = \"ssh\"\n"
+                    ],
+                    [
+                        105,
+                        "  #     user        = \"${var.ssh_user}\"\n"
+                    ],
+                    [
+                        106,
+                        "  #     private_key = \"${file(\"${var.private_key_path}\")}\"\n"
+                    ],
+                    [
+                        107,
+                        "  #   }\n"
+                    ],
+                    [
+                        108,
+                        "  # }\n"
+                    ],
+                    [
+                        109,
+                        "  # Don't comment out this next line.\n"
+                    ],
+                    [
+                        110,
+                        "}\n"
+                    ]
+                ],
+                "file_path": "/terraform_gcp/main.tf",
+                "file_abs_path": "/app/terraform_gcp/main.tf",
+                "repo_file_path": "/terraform_gcp/main.tf",
+                "file_line_range": [
+                    7,
+                    110
+                ],
+                "resource": "google_compute_instance.tfansible",
+                "evaluations": null,
+                "check_class": "checkov.terraform.checks.resource.gcp.GoogleComputeBlockProjectSSH",
+                "fixed_definition": null,
+                "entity_tags": null,
+                "caller_file_path": null,
+                "caller_file_line_range": null,
+                "resource_address": null,
+                "severity": null,
+                "bc_category": null,
+                "benchmarks": {},
+                "description": null,
+                "short_description": null,
+                "vulnerability_details": null,
+                "connected_node": null,
+                "guideline": null,
+                "details": [],
+                "breadcrumbs": {
+                    "metadata.ssh-keys": [
+                        {
+                            "type": "variable",
+                            "name": "ssh_user",
+                            "path": "/app/terraform_gcp/variables.tf",
+                            "module_connection": false
+                        }
+                    ],
+                    "provisioner/remote-exec.connection.private_key": [
+                        {
+                            "type": "variable",
+                            "name": "private_key_path",
+                            "path": "/app/terraform_gcp/variables.tf",
+                            "module_connection": false
+                        }
+                    ],
+                    "provisioner/remote-exec.connection": [
+                        {
+                            "type": "variable",
+                            "name": "ssh_user",
+                            "path": "/app/terraform_gcp/variables.tf",
+                            "module_connection": false
+                        }
+                    ],
+                    "provisioner/local-exec.command": [
+                        {
+                            "type": "variable",
+                            "name": "private_key_path",
+                            "path": "/app/terraform_gcp/variables.tf",
+                            "module_connection": false
+                        }
+                    ],
+                    "provisioner/remote-exec.connection.user": [
+                        {
+                            "type": "variable",
+                            "name": "ssh_user",
+                            "path": "/app/terraform_gcp/variables.tf",
+                            "module_connection": false
+                        }
+                    ]
+                }
+            },
+            {
+                "check_id": "CKV_GCP_38",
+                "bc_check_id": null,
+                "check_name": "Ensure VM disks for critical VMs are encrypted with Customer Supplied Encryption Keys (CSEK)",
+                "check_result": {
+                    "result": "FAILED",
+                    "evaluated_keys": [
+                        "boot_disk",
+                        "boot_disk/[0]/disk_encryption_key_raw",
+                        "boot_disk/[0]/kms_key_self_link"
+                    ]
+                },
+                "code_block": [
+                    [
+                        7,
+                        "resource \"google_compute_instance\" \"tfansible\" {\n"
+                    ],
+                    [
+                        8,
+                        "  name         = \"terraform-ansible\"\n"
+                    ],
+                    [
+                        9,
+                        "  machine_type = \"n1-standard-1\"\n"
+                    ],
+                    [
+                        10,
+                        "  zone         = \"us-central1-a\"\n"
+                    ],
+                    [
+                        11,
+                        "\n"
+                    ],
+                    [
+                        12,
+                        "  tags = [\"web\"]\n"
+                    ],
+                    [
+                        13,
+                        "\n"
+                    ],
+                    [
+                        14,
+                        "  boot_disk {\n"
+                    ],
+                    [
+                        15,
+                        "    initialize_params {\n"
+                    ],
+                    [
+                        16,
+                        "      image = \"rhel-cloud/rhel-7\"\n"
+                    ],
+                    [
+                        17,
+                        "    }\n"
+                    ],
+                    [
+                        18,
+                        "  }\n"
+                    ],
+                    [
+                        19,
+                        "\n"
+                    ],
+                    [
+                        20,
+                        "  // Local SSD disk\n"
+                    ],
+                    [
+                        21,
+                        "  scratch_disk {}\n"
+                    ],
+                    [
+                        22,
+                        "\n"
+                    ],
+                    [
+                        23,
+                        "  network_interface {\n"
+                    ],
+                    [
+                        24,
+                        "    network = \"default\"\n"
+                    ],
+                    [
+                        25,
+                        "\n"
+                    ],
+                    [
+                        26,
+                        "    access_config {\n"
+                    ],
+                    [
+                        27,
+                        "      // Ephemeral IP\n"
+                    ],
+                    [
+                        28,
+                        "    }\n"
+                    ],
+                    [
+                        29,
+                        "  }\n"
+                    ],
+                    [
+                        30,
+                        "\n"
+                    ],
+                    [
+                        31,
+                        "  metadata {\n"
+                    ],
+                    [
+                        32,
+                        "    Name     = \"Terraform and Ansible Demo\"\n"
+                    ],
+                    [
+                        33,
+                        "    ssh-keys = \"${var.ssh_user}:${file(\"${var.public_key_path}\")}\"\n"
+                    ],
+                    [
+                        34,
+                        "  }\n"
+                    ],
+                    [
+                        35,
+                        "\n"
+                    ],
+                    [
+                        36,
+                        "  metadata_startup_script = \"echo hi > /test.txt\"\n"
+                    ],
+                    [
+                        37,
+                        "\n"
+                    ],
+                    [
+                        38,
+                        "  service_account {\n"
+                    ],
+                    [
+                        39,
+                        "    scopes = [\"userinfo-email\", \"compute-ro\", \"storage-ro\"]\n"
+                    ],
+                    [
+                        40,
+                        "  }\n"
+                    ],
+                    [
+                        41,
+                        "\n"
+                    ],
+                    [
+                        42,
+                        "  #############################################################################\n"
+                    ],
+                    [
+                        43,
+                        "  # This is the 'local exec' method.  \n"
+                    ],
+                    [
+                        44,
+                        "  # Ansible runs from the same host you run Terraform from\n"
+                    ],
+                    [
+                        45,
+                        "  #############################################################################\n"
+                    ],
+                    [
+                        46,
+                        "\n"
+                    ],
+                    [
+                        47,
+                        "  provisioner \"remote-exec\" {\n"
+                    ],
+                    [
+                        48,
+                        "    inline = [\"echo 'Hello World'\"]\n"
+                    ],
+                    [
+                        49,
+                        "\n"
+                    ],
+                    [
+                        50,
+                        "    connection {\n"
+                    ],
+                    [
+                        51,
+                        "      type        = \"ssh\"\n"
+                    ],
+                    [
+                        52,
+                        "      user        = \"${var.ssh_user}\"\n"
+                    ],
+                    [
+                        53,
+                        "      private_key = \"${file(\"${var.private_key_path}\")}\"\n"
+                    ],
+                    [
+                        54,
+                        "    }\n"
+                    ],
+                    [
+                        55,
+                        "  }\n"
+                    ],
+                    [
+                        56,
+                        "  provisioner \"local-exec\" {\n"
+                    ],
+                    [
+                        57,
+                        "    command = \"ansible-playbook -i '${google_compute_instance.tfansible.network_interface.0.access_config.0.assigned_nat_ip},' --private-key ${var.private_key_path} ../ansible/httpd.yml\"\n"
+                    ],
+                    [
+                        58,
+                        "  }\n"
+                    ],
+                    [
+                        59,
+                        "\n"
+                    ],
+                    [
+                        60,
+                        "  #############################################################################\n"
+                    ],
+                    [
+                        61,
+                        "  # This is the 'remote exec' method.  \n"
+                    ],
+                    [
+                        62,
+                        "  # Ansible runs on the target host.\n"
+                    ],
+                    [
+                        63,
+                        "  #############################################################################\n"
+                    ],
+                    [
+                        64,
+                        "\n"
+                    ],
+                    [
+                        65,
+                        "  # provisioner \"remote-exec\" {\n"
+                    ],
+                    [
+                        66,
+                        "  #   inline = [\n"
+                    ],
+                    [
+                        67,
+                        "  #     \"mkdir /home/${var.ssh_user}/files\",\n"
+                    ],
+                    [
+                        68,
+                        "  #     \"mkdir /home/${var.ssh_user}/ansible\",\n"
+                    ],
+                    [
+                        69,
+                        "  #   ]\n"
+                    ],
+                    [
+                        70,
+                        "\n"
+                    ],
+                    [
+                        71,
+                        "  #   connection {\n"
+                    ],
+                    [
+                        72,
+                        "  #     type        = \"ssh\"\n"
+                    ],
+                    [
+                        73,
+                        "  #     user        = \"${var.ssh_user}\"\n"
+                    ],
+                    [
+                        74,
+                        "  #     private_key = \"${file(\"${var.private_key_path}\")}\"\n"
+                    ],
+                    [
+                        75,
+                        "  #   }\n"
+                    ],
+                    [
+                        76,
+                        "  # }\n"
+                    ],
+                    [
+                        77,
+                        "  # provisioner \"file\" {\n"
+                    ],
+                    [
+                        78,
+                        "  #   source      = \"../ansible/httpd.yml\"\n"
+                    ],
+                    [
+                        79,
+                        "  #   destination = \"/home/${var.ssh_user}/ansible/httpd.yml\"\n"
+                    ],
+                    [
+                        80,
+                        "\n"
+                    ],
+                    [
+                        81,
+                        "  #   connection {\n"
+                    ],
+                    [
+                        82,
+                        "  #     type        = \"ssh\"\n"
+                    ],
+                    [
+                        83,
+                        "  #     user        = \"${var.ssh_user}\"\n"
+                    ],
+                    [
+                        84,
+                        "  #     private_key = \"${file(\"${var.private_key_path}\")}\"\n"
+                    ],
+                    [
+                        85,
+                        "  #   }\n"
+                    ],
+                    [
+                        86,
+                        "  # }\n"
+                    ],
+                    [
+                        87,
+                        "  # provisioner \"file\" {\n"
+                    ],
+                    [
+                        88,
+                        "  #   source      = \"../files/index.j2\"\n"
+                    ],
+                    [
+                        89,
+                        "  #   destination = \"/home/${var.ssh_user}/files/index.j2\"\n"
+                    ],
+                    [
+                        90,
+                        "\n"
+                    ],
+                    [
+                        91,
+                        "  #   connection {\n"
+                    ],
+                    [
+                        92,
+                        "  #     type        = \"ssh\"\n"
+                    ],
+                    [
+                        93,
+                        "  #     user        = \"${var.ssh_user}\"\n"
+                    ],
+                    [
+                        94,
+                        "  #     private_key = \"${file(\"${var.private_key_path}\")}\"\n"
+                    ],
+                    [
+                        95,
+                        "  #   }\n"
+                    ],
+                    [
+                        96,
+                        "  # }\n"
+                    ],
+                    [
+                        97,
+                        "  # provisioner \"remote-exec\" {\n"
+                    ],
+                    [
+                        98,
+                        "  #   inline = [\n"
+                    ],
+                    [
+                        99,
+                        "  #     \"sudo yum -y install ansible\",\n"
+                    ],
+                    [
+                        100,
+                        "  #     \"cd ansible; ansible-playbook -c local -i \\\"localhost,\\\" httpd.yml\",\n"
+                    ],
+                    [
+                        101,
+                        "  #   ]\n"
+                    ],
+                    [
+                        102,
+                        "\n"
+                    ],
+                    [
+                        103,
+                        "  #   connection {\n"
+                    ],
+                    [
+                        104,
+                        "  #     type        = \"ssh\"\n"
+                    ],
+                    [
+                        105,
+                        "  #     user        = \"${var.ssh_user}\"\n"
+                    ],
+                    [
+                        106,
+                        "  #     private_key = \"${file(\"${var.private_key_path}\")}\"\n"
+                    ],
+                    [
+                        107,
+                        "  #   }\n"
+                    ],
+                    [
+                        108,
+                        "  # }\n"
+                    ],
+                    [
+                        109,
+                        "  # Don't comment out this next line.\n"
+                    ],
+                    [
+                        110,
+                        "}\n"
+                    ]
+                ],
+                "file_path": "/terraform_gcp/main.tf",
+                "file_abs_path": "/app/terraform_gcp/main.tf",
+                "repo_file_path": "/terraform_gcp/main.tf",
+                "file_line_range": [
+                    7,
+                    110
+                ],
+                "resource": "google_compute_instance.tfansible",
+                "evaluations": null,
+                "check_class": "checkov.terraform.checks.resource.gcp.GoogleComputeBootDiskEncryption",
+                "fixed_definition": null,
+                "entity_tags": null,
+                "caller_file_path": null,
+                "caller_file_line_range": null,
+                "resource_address": null,
+                "severity": null,
+                "bc_category": null,
+                "benchmarks": {},
+                "description": null,
+                "short_description": null,
+                "vulnerability_details": null,
+                "connected_node": null,
+                "guideline": null,
+                "details": [],
+                "breadcrumbs": {
+                    "metadata.ssh-keys": [
+                        {
+                            "type": "variable",
+                            "name": "ssh_user",
+                            "path": "/app/terraform_gcp/variables.tf",
+                            "module_connection": false
+                        }
+                    ],
+                    "provisioner/remote-exec.connection.private_key": [
+                        {
+                            "type": "variable",
+                            "name": "private_key_path",
+                            "path": "/app/terraform_gcp/variables.tf",
+                            "module_connection": false
+                        }
+                    ],
+                    "provisioner/remote-exec.connection": [
+                        {
+                            "type": "variable",
+                            "name": "ssh_user",
+                            "path": "/app/terraform_gcp/variables.tf",
+                            "module_connection": false
+                        }
+                    ],
+                    "provisioner/local-exec.command": [
+                        {
+                            "type": "variable",
+                            "name": "private_key_path",
+                            "path": "/app/terraform_gcp/variables.tf",
+                            "module_connection": false
+                        }
+                    ],
+                    "provisioner/remote-exec.connection.user": [
+                        {
+                            "type": "variable",
+                            "name": "ssh_user",
+                            "path": "/app/terraform_gcp/variables.tf",
+                            "module_connection": false
+                        }
+                    ]
+                }
+            },
+            {
+                "check_id": "CKV_GCP_40",
+                "bc_check_id": null,
+                "check_name": "Ensure that Compute instances do not have public IP addresses",
+                "check_result": {
+                    "result": "FAILED",
+                    "evaluated_keys": [
+                        "network_interface/[0]/access_config"
+                    ]
+                },
+                "code_block": [
+                    [
+                        7,
+                        "resource \"google_compute_instance\" \"tfansible\" {\n"
+                    ],
+                    [
+                        8,
+                        "  name         = \"terraform-ansible\"\n"
+                    ],
+                    [
+                        9,
+                        "  machine_type = \"n1-standard-1\"\n"
+                    ],
+                    [
+                        10,
+                        "  zone         = \"us-central1-a\"\n"
+                    ],
+                    [
+                        11,
+                        "\n"
+                    ],
+                    [
+                        12,
+                        "  tags = [\"web\"]\n"
+                    ],
+                    [
+                        13,
+                        "\n"
+                    ],
+                    [
+                        14,
+                        "  boot_disk {\n"
+                    ],
+                    [
+                        15,
+                        "    initialize_params {\n"
+                    ],
+                    [
+                        16,
+                        "      image = \"rhel-cloud/rhel-7\"\n"
+                    ],
+                    [
+                        17,
+                        "    }\n"
+                    ],
+                    [
+                        18,
+                        "  }\n"
+                    ],
+                    [
+                        19,
+                        "\n"
+                    ],
+                    [
+                        20,
+                        "  // Local SSD disk\n"
+                    ],
+                    [
+                        21,
+                        "  scratch_disk {}\n"
+                    ],
+                    [
+                        22,
+                        "\n"
+                    ],
+                    [
+                        23,
+                        "  network_interface {\n"
+                    ],
+                    [
+                        24,
+                        "    network = \"default\"\n"
+                    ],
+                    [
+                        25,
+                        "\n"
+                    ],
+                    [
+                        26,
+                        "    access_config {\n"
+                    ],
+                    [
+                        27,
+                        "      // Ephemeral IP\n"
+                    ],
+                    [
+                        28,
+                        "    }\n"
+                    ],
+                    [
+                        29,
+                        "  }\n"
+                    ],
+                    [
+                        30,
+                        "\n"
+                    ],
+                    [
+                        31,
+                        "  metadata {\n"
+                    ],
+                    [
+                        32,
+                        "    Name     = \"Terraform and Ansible Demo\"\n"
+                    ],
+                    [
+                        33,
+                        "    ssh-keys = \"${var.ssh_user}:${file(\"${var.public_key_path}\")}\"\n"
+                    ],
+                    [
+                        34,
+                        "  }\n"
+                    ],
+                    [
+                        35,
+                        "\n"
+                    ],
+                    [
+                        36,
+                        "  metadata_startup_script = \"echo hi > /test.txt\"\n"
+                    ],
+                    [
+                        37,
+                        "\n"
+                    ],
+                    [
+                        38,
+                        "  service_account {\n"
+                    ],
+                    [
+                        39,
+                        "    scopes = [\"userinfo-email\", \"compute-ro\", \"storage-ro\"]\n"
+                    ],
+                    [
+                        40,
+                        "  }\n"
+                    ],
+                    [
+                        41,
+                        "\n"
+                    ],
+                    [
+                        42,
+                        "  #############################################################################\n"
+                    ],
+                    [
+                        43,
+                        "  # This is the 'local exec' method.  \n"
+                    ],
+                    [
+                        44,
+                        "  # Ansible runs from the same host you run Terraform from\n"
+                    ],
+                    [
+                        45,
+                        "  #############################################################################\n"
+                    ],
+                    [
+                        46,
+                        "\n"
+                    ],
+                    [
+                        47,
+                        "  provisioner \"remote-exec\" {\n"
+                    ],
+                    [
+                        48,
+                        "    inline = [\"echo 'Hello World'\"]\n"
+                    ],
+                    [
+                        49,
+                        "\n"
+                    ],
+                    [
+                        50,
+                        "    connection {\n"
+                    ],
+                    [
+                        51,
+                        "      type        = \"ssh\"\n"
+                    ],
+                    [
+                        52,
+                        "      user        = \"${var.ssh_user}\"\n"
+                    ],
+                    [
+                        53,
+                        "      private_key = \"${file(\"${var.private_key_path}\")}\"\n"
+                    ],
+                    [
+                        54,
+                        "    }\n"
+                    ],
+                    [
+                        55,
+                        "  }\n"
+                    ],
+                    [
+                        56,
+                        "  provisioner \"local-exec\" {\n"
+                    ],
+                    [
+                        57,
+                        "    command = \"ansible-playbook -i '${google_compute_instance.tfansible.network_interface.0.access_config.0.assigned_nat_ip},' --private-key ${var.private_key_path} ../ansible/httpd.yml\"\n"
+                    ],
+                    [
+                        58,
+                        "  }\n"
+                    ],
+                    [
+                        59,
+                        "\n"
+                    ],
+                    [
+                        60,
+                        "  #############################################################################\n"
+                    ],
+                    [
+                        61,
+                        "  # This is the 'remote exec' method.  \n"
+                    ],
+                    [
+                        62,
+                        "  # Ansible runs on the target host.\n"
+                    ],
+                    [
+                        63,
+                        "  #############################################################################\n"
+                    ],
+                    [
+                        64,
+                        "\n"
+                    ],
+                    [
+                        65,
+                        "  # provisioner \"remote-exec\" {\n"
+                    ],
+                    [
+                        66,
+                        "  #   inline = [\n"
+                    ],
+                    [
+                        67,
+                        "  #     \"mkdir /home/${var.ssh_user}/files\",\n"
+                    ],
+                    [
+                        68,
+                        "  #     \"mkdir /home/${var.ssh_user}/ansible\",\n"
+                    ],
+                    [
+                        69,
+                        "  #   ]\n"
+                    ],
+                    [
+                        70,
+                        "\n"
+                    ],
+                    [
+                        71,
+                        "  #   connection {\n"
+                    ],
+                    [
+                        72,
+                        "  #     type        = \"ssh\"\n"
+                    ],
+                    [
+                        73,
+                        "  #     user        = \"${var.ssh_user}\"\n"
+                    ],
+                    [
+                        74,
+                        "  #     private_key = \"${file(\"${var.private_key_path}\")}\"\n"
+                    ],
+                    [
+                        75,
+                        "  #   }\n"
+                    ],
+                    [
+                        76,
+                        "  # }\n"
+                    ],
+                    [
+                        77,
+                        "  # provisioner \"file\" {\n"
+                    ],
+                    [
+                        78,
+                        "  #   source      = \"../ansible/httpd.yml\"\n"
+                    ],
+                    [
+                        79,
+                        "  #   destination = \"/home/${var.ssh_user}/ansible/httpd.yml\"\n"
+                    ],
+                    [
+                        80,
+                        "\n"
+                    ],
+                    [
+                        81,
+                        "  #   connection {\n"
+                    ],
+                    [
+                        82,
+                        "  #     type        = \"ssh\"\n"
+                    ],
+                    [
+                        83,
+                        "  #     user        = \"${var.ssh_user}\"\n"
+                    ],
+                    [
+                        84,
+                        "  #     private_key = \"${file(\"${var.private_key_path}\")}\"\n"
+                    ],
+                    [
+                        85,
+                        "  #   }\n"
+                    ],
+                    [
+                        86,
+                        "  # }\n"
+                    ],
+                    [
+                        87,
+                        "  # provisioner \"file\" {\n"
+                    ],
+                    [
+                        88,
+                        "  #   source      = \"../files/index.j2\"\n"
+                    ],
+                    [
+                        89,
+                        "  #   destination = \"/home/${var.ssh_user}/files/index.j2\"\n"
+                    ],
+                    [
+                        90,
+                        "\n"
+                    ],
+                    [
+                        91,
+                        "  #   connection {\n"
+                    ],
+                    [
+                        92,
+                        "  #     type        = \"ssh\"\n"
+                    ],
+                    [
+                        93,
+                        "  #     user        = \"${var.ssh_user}\"\n"
+                    ],
+                    [
+                        94,
+                        "  #     private_key = \"${file(\"${var.private_key_path}\")}\"\n"
+                    ],
+                    [
+                        95,
+                        "  #   }\n"
+                    ],
+                    [
+                        96,
+                        "  # }\n"
+                    ],
+                    [
+                        97,
+                        "  # provisioner \"remote-exec\" {\n"
+                    ],
+                    [
+                        98,
+                        "  #   inline = [\n"
+                    ],
+                    [
+                        99,
+                        "  #     \"sudo yum -y install ansible\",\n"
+                    ],
+                    [
+                        100,
+                        "  #     \"cd ansible; ansible-playbook -c local -i \\\"localhost,\\\" httpd.yml\",\n"
+                    ],
+                    [
+                        101,
+                        "  #   ]\n"
+                    ],
+                    [
+                        102,
+                        "\n"
+                    ],
+                    [
+                        103,
+                        "  #   connection {\n"
+                    ],
+                    [
+                        104,
+                        "  #     type        = \"ssh\"\n"
+                    ],
+                    [
+                        105,
+                        "  #     user        = \"${var.ssh_user}\"\n"
+                    ],
+                    [
+                        106,
+                        "  #     private_key = \"${file(\"${var.private_key_path}\")}\"\n"
+                    ],
+                    [
+                        107,
+                        "  #   }\n"
+                    ],
+                    [
+                        108,
+                        "  # }\n"
+                    ],
+                    [
+                        109,
+                        "  # Don't comment out this next line.\n"
+                    ],
+                    [
+                        110,
+                        "}\n"
+                    ]
+                ],
+                "file_path": "/terraform_gcp/main.tf",
+                "file_abs_path": "/app/terraform_gcp/main.tf",
+                "repo_file_path": "/terraform_gcp/main.tf",
+                "file_line_range": [
+                    7,
+                    110
+                ],
+                "resource": "google_compute_instance.tfansible",
+                "evaluations": null,
+                "check_class": "checkov.terraform.checks.resource.gcp.GoogleComputeExternalIP",
+                "fixed_definition": null,
+                "entity_tags": null,
+                "caller_file_path": null,
+                "caller_file_line_range": null,
+                "resource_address": null,
+                "severity": null,
+                "bc_category": null,
+                "benchmarks": {},
+                "description": null,
+                "short_description": null,
+                "vulnerability_details": null,
+                "connected_node": null,
+                "guideline": null,
+                "details": [],
+                "breadcrumbs": {
+                    "metadata.ssh-keys": [
+                        {
+                            "type": "variable",
+                            "name": "ssh_user",
+                            "path": "/app/terraform_gcp/variables.tf",
+                            "module_connection": false
+                        }
+                    ],
+                    "provisioner/remote-exec.connection.private_key": [
+                        {
+                            "type": "variable",
+                            "name": "private_key_path",
+                            "path": "/app/terraform_gcp/variables.tf",
+                            "module_connection": false
+                        }
+                    ],
+                    "provisioner/remote-exec.connection": [
+                        {
+                            "type": "variable",
+                            "name": "ssh_user",
+                            "path": "/app/terraform_gcp/variables.tf",
+                            "module_connection": false
+                        }
+                    ],
+                    "provisioner/local-exec.command": [
+                        {
+                            "type": "variable",
+                            "name": "private_key_path",
+                            "path": "/app/terraform_gcp/variables.tf",
+                            "module_connection": false
+                        }
+                    ],
+                    "provisioner/remote-exec.connection.user": [
+                        {
+                            "type": "variable",
+                            "name": "ssh_user",
+                            "path": "/app/terraform_gcp/variables.tf",
+                            "module_connection": false
+                        }
+                    ]
+                }
+            },
+            {
+                "check_id": "CKV_GCP_106",
+                "bc_check_id": null,
+                "check_name": "Ensure Google compute firewall ingress does not allow unrestricted http port 80 access",
+                "check_result": {
+                    "result": "FAILED",
+                    "evaluated_keys": [
+                        "allow/[1]/ports",
+                        "source_ranges"
+                    ]
+                },
+                "code_block": [
+                    [
+                        112,
+                        "resource \"google_compute_firewall\" \"default\" {\n"
+                    ],
+                    [
+                        113,
+                        "  name    = \"web-firewall\"\n"
+                    ],
+                    [
+                        114,
+                        "  network = \"default\"\n"
+                    ],
+                    [
+                        115,
+                        "\n"
+                    ],
+                    [
+                        116,
+                        "  allow {\n"
+                    ],
+                    [
+                        117,
+                        "    protocol = \"icmp\"\n"
+                    ],
+                    [
+                        118,
+                        "  }\n"
+                    ],
+                    [
+                        119,
+                        "\n"
+                    ],
+                    [
+                        120,
+                        "  allow {\n"
+                    ],
+                    [
+                        121,
+                        "    protocol = \"tcp\"\n"
+                    ],
+                    [
+                        122,
+                        "    ports    = [\"80\"]\n"
+                    ],
+                    [
+                        123,
+                        "  }\n"
+                    ],
+                    [
+                        124,
+                        "\n"
+                    ],
+                    [
+                        125,
+                        "  source_ranges = [\"0.0.0.0/0\"]\n"
+                    ],
+                    [
+                        126,
+                        "  target_tags   = [\"web\"]\n"
+                    ],
+                    [
+                        127,
+                        "}\n"
+                    ]
+                ],
+                "file_path": "/terraform_gcp/main.tf",
+                "file_abs_path": "/app/terraform_gcp/main.tf",
+                "repo_file_path": "/terraform_gcp/main.tf",
+                "file_line_range": [
+                    112,
+                    127
+                ],
+                "resource": "google_compute_firewall.default",
+                "evaluations": null,
+                "check_class": "checkov.terraform.checks.resource.gcp.GoogleComputeFirewallUnrestrictedIngress80",
+                "fixed_definition": null,
+                "entity_tags": null,
+                "caller_file_path": null,
+                "caller_file_line_range": null,
+                "resource_address": null,
+                "severity": null,
+                "bc_category": null,
+                "benchmarks": {},
+                "description": null,
+                "short_description": null,
+                "vulnerability_details": null,
+                "connected_node": null,
+                "guideline": null,
+                "details": []
+            },
+            {
+                "check_id": "CKV2_AZURE_12",
+                "bc_check_id": null,
+                "check_name": "Ensure that virtual machines are backed up using Azure Backup",
+                "check_result": {
+                    "result": "FAILED",
+                    "entity": {
+                        "azurerm_virtual_machine": {
+                            "site": {
+                                "__end_line__": 128,
+                                "__start_line__": 75,
+                                "delete_os_disk_on_termination": [
+                                    true
+                                ],
+                                "location": [
+                                    "centralus"
+                                ],
+                                "name": [
+                                    "catapp-site"
+                                ],
+                                "network_interface_ids": [
+                                    [
+                                        "azurerm_network_interface.tf-ansible-nic.id"
+                                    ]
+                                ],
+                                "os_profile": [
+                                    {
+                                        "admin_password": [
+                                            "Adminpassword123!"
+                                        ],
+                                        "admin_username": [
+                                            "adminuser"
+                                        ],
+                                        "computer_name": [
+                                            "catapp"
+                                        ]
+                                    }
+                                ],
+                                "os_profile_linux_config": [
+                                    {
+                                        "disable_password_authentication": [
+                                            true
+                                        ],
+                                        "ssh_keys": [
+                                            {
+                                                "key_data": [
+                                                    "var.ssh_pubkey"
+                                                ],
+                                                "path": [
+                                                    "/home/adminuser/.ssh/authorized_keys"
+                                                ]
+                                            }
+                                        ]
+                                    }
+                                ],
+                                "provisioner": [
+                                    {
+                                        "remote-exec": {
+                                            "connection": [
+                                                {
+                                                    "host": [
+                                                        "${azurerm_public_ip.tf-ansible-pip.fqdn}"
+                                                    ],
+                                                    "private_key": [
+                                                        "${var.ssh_key}"
+                                                    ],
+                                                    "type": [
+                                                        "ssh"
+                                                    ],
+                                                    "user": [
+                                                        "${var.admin_username}"
+                                                    ]
+                                                }
+                                            ],
+                                            "inline": [
+                                                [
+                                                    "echo 'Hello World'"
+                                                ]
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "local-exec": {
+                                            "command": [
+                                                "ansible-playbook -i ../ansible/inventory.yaml --private-key ${var.ssh_key_path} ../ansible/httpd.yml"
+                                            ]
+                                        }
+                                    }
+                                ],
+                                "resource_group_name": [
+                                    "Terraform-Ansible"
+                                ],
+                                "storage_image_reference": [
+                                    {
+                                        "offer": [
+                                            "RHEL"
+                                        ],
+                                        "publisher": [
+                                            "RedHat"
+                                        ],
+                                        "sku": [
+                                            7.3
+                                        ],
+                                        "version": [
+                                            "latest"
+                                        ]
+                                    }
+                                ],
+                                "storage_os_disk": [
+                                    {
+                                        "caching": [
+                                            "ReadWrite"
+                                        ],
+                                        "create_option": [
+                                            "FromImage"
+                                        ],
+                                        "managed_disk_type": [
+                                            "Standard_LRS"
+                                        ],
+                                        "name": [
+                                            "catapp-osdisk"
+                                        ]
+                                    }
+                                ],
+                                "vm_size": [
+                                    "Standard_A0"
+                                ]
+                            }
+                        }
+                    },
+                    "evaluated_keys": [
+                        "resource_type",
+                        "networking"
+                    ]
+                },
+                "code_block": [
+                    [
+                        75,
+                        "resource \"azurerm_virtual_machine\" \"site\" {\n"
+                    ],
+                    [
+                        76,
+                        "  name                = \"${var.hostname}-site\"\n"
+                    ],
+                    [
+                        77,
+                        "  location            = \"${var.location}\"\n"
+                    ],
+                    [
+                        78,
+                        "  resource_group_name = \"${azurerm_resource_group.terraform_ansible.name}\"\n"
+                    ],
+                    [
+                        79,
+                        "  vm_size             = \"${var.vm_size}\"\n"
+                    ],
+                    [
+                        80,
+                        "\n"
+                    ],
+                    [
+                        81,
+                        "  network_interface_ids         = [\"${azurerm_network_interface.tf-ansible-nic.id}\"]\n"
+                    ],
+                    [
+                        82,
+                        "  delete_os_disk_on_termination = \"true\"\n"
+                    ],
+                    [
+                        83,
+                        "\n"
+                    ],
+                    [
+                        84,
+                        "  storage_image_reference {\n"
+                    ],
+                    [
+                        85,
+                        "    publisher = \"${var.image_publisher}\"\n"
+                    ],
+                    [
+                        86,
+                        "    offer     = \"${var.image_offer}\"\n"
+                    ],
+                    [
+                        87,
+                        "    sku       = \"${var.image_sku}\"\n"
+                    ],
+                    [
+                        88,
+                        "    version   = \"${var.image_version}\"\n"
+                    ],
+                    [
+                        89,
+                        "  }\n"
+                    ],
+                    [
+                        90,
+                        "\n"
+                    ],
+                    [
+                        91,
+                        "  storage_os_disk {\n"
+                    ],
+                    [
+                        92,
+                        "    name              = \"${var.hostname}-osdisk\"\n"
+                    ],
+                    [
+                        93,
+                        "    managed_disk_type = \"Standard_LRS\"\n"
+                    ],
+                    [
+                        94,
+                        "    caching           = \"ReadWrite\"\n"
+                    ],
+                    [
+                        95,
+                        "    create_option     = \"FromImage\"\n"
+                    ],
+                    [
+                        96,
+                        "  }\n"
+                    ],
+                    [
+                        97,
+                        "\n"
+                    ],
+                    [
+                        98,
+                        "  os_profile {\n"
+                    ],
+                    [
+                        99,
+                        "    computer_name  = \"${var.hostname}\"\n"
+                    ],
+                    [
+                        100,
+                        "    admin_username = \"${var.admin_username}\"\n"
+                    ],
+                    [
+                        101,
+                        "    admin_password = \"${var.admin_password}\"\n"
+                    ],
+                    [
+                        102,
+                        "  }\n"
+                    ],
+                    [
+                        103,
+                        "\n"
+                    ],
+                    [
+                        104,
+                        "  os_profile_linux_config {\n"
+                    ],
+                    [
+                        105,
+                        "      disable_password_authentication = true\n"
+                    ],
+                    [
+                        106,
+                        "      ssh_keys {\n"
+                    ],
+                    [
+                        107,
+                        "          path     = \"/home/${var.admin_username}/.ssh/authorized_keys\"\n"
+                    ],
+                    [
+                        108,
+                        "          key_data = \"${var.ssh_pubkey}\"\n"
+                    ],
+                    [
+                        109,
+                        "      }\n"
+                    ],
+                    [
+                        110,
+                        "  }\n"
+                    ],
+                    [
+                        111,
+                        "\n"
+                    ],
+                    [
+                        112,
+                        "  # This is to ensure SSH comes up before we run the local exec.\n"
+                    ],
+                    [
+                        113,
+                        "  provisioner \"remote-exec\" { \n"
+                    ],
+                    [
+                        114,
+                        "    inline = [\"echo 'Hello World'\"]\n"
+                    ],
+                    [
+                        115,
+                        "\n"
+                    ],
+                    [
+                        116,
+                        "    connection {\n"
+                    ],
+                    [
+                        117,
+                        "      type = \"ssh\"\n"
+                    ],
+                    [
+                        118,
+                        "      host = \"${azurerm_public_ip.tf-ansible-pip.fqdn}\"\n"
+                    ],
+                    [
+                        119,
+                        "      user = \"${var.admin_username}\"\n"
+                    ],
+                    [
+                        120,
+                        "      private_key = \"${var.ssh_key}\"\n"
+                    ],
+                    [
+                        121,
+                        "    }\n"
+                    ],
+                    [
+                        122,
+                        "  }\n"
+                    ],
+                    [
+                        123,
+                        "\n"
+                    ],
+                    [
+                        124,
+                        "  provisioner \"local-exec\" {\n"
+                    ],
+                    [
+                        125,
+                        "    command = \"ansible-playbook -i ../ansible/inventory.yaml --private-key ${var.ssh_key_path} ../ansible/httpd.yml\"\n"
+                    ],
+                    [
+                        126,
+                        "  }\n"
+                    ],
+                    [
+                        127,
+                        "\n"
+                    ],
+                    [
+                        128,
+                        "}"
+                    ]
+                ],
+                "file_path": "/terraform_azure/main.tf",
+                "file_abs_path": "/app/terraform_azure/main.tf",
+                "repo_file_path": "/terraform_azure/main.tf",
+                "file_line_range": [
+                    75,
+                    128
+                ],
+                "resource": "azurerm_virtual_machine.site",
+                "evaluations": null,
+                "check_class": "checkov.common.graph.checks_infra.base_check",
+                "fixed_definition": null,
+                "entity_tags": {},
+                "caller_file_path": null,
+                "caller_file_line_range": null,
+                "resource_address": null,
+                "severity": null,
+                "bc_category": null,
+                "benchmarks": {},
+                "description": null,
+                "short_description": null,
+                "vulnerability_details": null,
+                "connected_node": null,
+                "guideline": null,
+                "details": [],
+                "breadcrumbs": {
+                    "name": [
+                        {
+                            "type": "variable",
+                            "name": "hostname",
+                            "path": "/app/terraform_azure/variables.tf",
+                            "module_connection": false
+                        }
+                    ],
+                    "os_profile.computer_name": [
+                        {
+                            "type": "variable",
+                            "name": "hostname",
+                            "path": "/app/terraform_azure/variables.tf",
+                            "module_connection": false
+                        }
+                    ],
+                    "storage_os_disk.name": [
+                        {
+                            "type": "variable",
+                            "name": "hostname",
+                            "path": "/app/terraform_azure/variables.tf",
+                            "module_connection": false
+                        }
+                    ],
+                    "location": [
+                        {
+                            "type": "variable",
+                            "name": "location",
+                            "path": "/app/terraform_azure/variables.tf",
+                            "module_connection": false
+                        }
+                    ],
+                    "vm_size": [
+                        {
+                            "type": "variable",
+                            "name": "vm_size",
+                            "path": "/app/terraform_azure/variables.tf",
+                            "module_connection": false
+                        }
+                    ],
+                    "storage_image_reference.publisher": [
+                        {
+                            "type": "variable",
+                            "name": "image_publisher",
+                            "path": "/app/terraform_azure/variables.tf",
+                            "module_connection": false
+                        }
+                    ],
+                    "storage_image_reference.offer": [
+                        {
+                            "type": "variable",
+                            "name": "image_offer",
+                            "path": "/app/terraform_azure/variables.tf",
+                            "module_connection": false
+                        }
+                    ],
+                    "storage_image_reference.sku": [
+                        {
+                            "type": "variable",
+                            "name": "image_sku",
+                            "path": "/app/terraform_azure/variables.tf",
+                            "module_connection": false
+                        }
+                    ],
+                    "storage_image_reference.version": [
+                        {
+                            "type": "variable",
+                            "name": "image_version",
+                            "path": "/app/terraform_azure/variables.tf",
+                            "module_connection": false
+                        }
+                    ],
+                    "provisioner/remote-exec.connection.user": [
+                        {
+                            "type": "variable",
+                            "name": "admin_username",
+                            "path": "/app/terraform_azure/variables.tf",
+                            "module_connection": false
+                        }
+                    ],
+                    "provisioner/remote-exec.connection": [
+                        {
+                            "type": "variable",
+                            "name": "admin_username",
+                            "path": "/app/terraform_azure/variables.tf",
+                            "module_connection": false
+                        }
+                    ],
+                    "os_profile.admin_username": [
+                        {
+                            "type": "variable",
+                            "name": "admin_username",
+                            "path": "/app/terraform_azure/variables.tf",
+                            "module_connection": false
+                        }
+                    ],
+                    "os_profile_linux_config.ssh_keys.path": [
+                        {
+                            "type": "variable",
+                            "name": "admin_username",
+                            "path": "/app/terraform_azure/variables.tf",
+                            "module_connection": false
+                        }
+                    ],
+                    "os_profile_linux_config.ssh_keys": [
+                        {
+                            "type": "variable",
+                            "name": "admin_username",
+                            "path": "/app/terraform_azure/variables.tf",
+                            "module_connection": false
+                        }
+                    ],
+                    "os_profile.admin_password": [
+                        {
+                            "type": "variable",
+                            "name": "admin_password",
+                            "path": "/app/terraform_azure/variables.tf",
+                            "module_connection": false
+                        }
+                    ],
+                    "resource_group_name": [
+                        {
+                            "type": "variable",
+                            "name": "resource_group",
+                            "path": "/app/terraform_azure/variables.tf",
+                            "module_connection": false
+                        },
+                        {
+                            "type": "resource",
+                            "name": "azurerm_resource_group.terraform_ansible",
+                            "path": "/app/terraform_azure/main.tf",
+                            "module_connection": false
+                        }
+                    ]
+                }
+            },
+            {
+                "check_id": "CKV2_AZURE_10",
+                "bc_check_id": null,
+                "check_name": "Ensure that Microsoft Antimalware is configured to automatically updates for Virtual Machines",
+                "check_result": {
+                    "result": "FAILED",
+                    "entity": {
+                        "azurerm_virtual_machine": {
+                            "site": {
+                                "__end_line__": 128,
+                                "__start_line__": 75,
+                                "delete_os_disk_on_termination": [
+                                    true
+                                ],
+                                "location": [
+                                    "centralus"
+                                ],
+                                "name": [
+                                    "catapp-site"
+                                ],
+                                "network_interface_ids": [
+                                    [
+                                        "azurerm_network_interface.tf-ansible-nic.id"
+                                    ]
+                                ],
+                                "os_profile": [
+                                    {
+                                        "admin_password": [
+                                            "Adminpassword123!"
+                                        ],
+                                        "admin_username": [
+                                            "adminuser"
+                                        ],
+                                        "computer_name": [
+                                            "catapp"
+                                        ]
+                                    }
+                                ],
+                                "os_profile_linux_config": [
+                                    {
+                                        "disable_password_authentication": [
+                                            true
+                                        ],
+                                        "ssh_keys": [
+                                            {
+                                                "key_data": [
+                                                    "var.ssh_pubkey"
+                                                ],
+                                                "path": [
+                                                    "/home/adminuser/.ssh/authorized_keys"
+                                                ]
+                                            }
+                                        ]
+                                    }
+                                ],
+                                "provisioner": [
+                                    {
+                                        "remote-exec": {
+                                            "connection": [
+                                                {
+                                                    "host": [
+                                                        "${azurerm_public_ip.tf-ansible-pip.fqdn}"
+                                                    ],
+                                                    "private_key": [
+                                                        "${var.ssh_key}"
+                                                    ],
+                                                    "type": [
+                                                        "ssh"
+                                                    ],
+                                                    "user": [
+                                                        "${var.admin_username}"
+                                                    ]
+                                                }
+                                            ],
+                                            "inline": [
+                                                [
+                                                    "echo 'Hello World'"
+                                                ]
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "local-exec": {
+                                            "command": [
+                                                "ansible-playbook -i ../ansible/inventory.yaml --private-key ${var.ssh_key_path} ../ansible/httpd.yml"
+                                            ]
+                                        }
+                                    }
+                                ],
+                                "resource_group_name": [
+                                    "Terraform-Ansible"
+                                ],
+                                "storage_image_reference": [
+                                    {
+                                        "offer": [
+                                            "RHEL"
+                                        ],
+                                        "publisher": [
+                                            "RedHat"
+                                        ],
+                                        "sku": [
+                                            7.3
+                                        ],
+                                        "version": [
+                                            "latest"
+                                        ]
+                                    }
+                                ],
+                                "storage_os_disk": [
+                                    {
+                                        "caching": [
+                                            "ReadWrite"
+                                        ],
+                                        "create_option": [
+                                            "FromImage"
+                                        ],
+                                        "managed_disk_type": [
+                                            "Standard_LRS"
+                                        ],
+                                        "name": [
+                                            "catapp-osdisk"
+                                        ]
+                                    }
+                                ],
+                                "vm_size": [
+                                    "Standard_A0"
+                                ]
+                            }
+                        }
+                    },
+                    "evaluated_keys": [
+                        "resource_type",
+                        "type",
+                        "publisher",
+                        "auto_upgrade_minor_version"
+                    ]
+                },
+                "code_block": [
+                    [
+                        75,
+                        "resource \"azurerm_virtual_machine\" \"site\" {\n"
+                    ],
+                    [
+                        76,
+                        "  name                = \"${var.hostname}-site\"\n"
+                    ],
+                    [
+                        77,
+                        "  location            = \"${var.location}\"\n"
+                    ],
+                    [
+                        78,
+                        "  resource_group_name = \"${azurerm_resource_group.terraform_ansible.name}\"\n"
+                    ],
+                    [
+                        79,
+                        "  vm_size             = \"${var.vm_size}\"\n"
+                    ],
+                    [
+                        80,
+                        "\n"
+                    ],
+                    [
+                        81,
+                        "  network_interface_ids         = [\"${azurerm_network_interface.tf-ansible-nic.id}\"]\n"
+                    ],
+                    [
+                        82,
+                        "  delete_os_disk_on_termination = \"true\"\n"
+                    ],
+                    [
+                        83,
+                        "\n"
+                    ],
+                    [
+                        84,
+                        "  storage_image_reference {\n"
+                    ],
+                    [
+                        85,
+                        "    publisher = \"${var.image_publisher}\"\n"
+                    ],
+                    [
+                        86,
+                        "    offer     = \"${var.image_offer}\"\n"
+                    ],
+                    [
+                        87,
+                        "    sku       = \"${var.image_sku}\"\n"
+                    ],
+                    [
+                        88,
+                        "    version   = \"${var.image_version}\"\n"
+                    ],
+                    [
+                        89,
+                        "  }\n"
+                    ],
+                    [
+                        90,
+                        "\n"
+                    ],
+                    [
+                        91,
+                        "  storage_os_disk {\n"
+                    ],
+                    [
+                        92,
+                        "    name              = \"${var.hostname}-osdisk\"\n"
+                    ],
+                    [
+                        93,
+                        "    managed_disk_type = \"Standard_LRS\"\n"
+                    ],
+                    [
+                        94,
+                        "    caching           = \"ReadWrite\"\n"
+                    ],
+                    [
+                        95,
+                        "    create_option     = \"FromImage\"\n"
+                    ],
+                    [
+                        96,
+                        "  }\n"
+                    ],
+                    [
+                        97,
+                        "\n"
+                    ],
+                    [
+                        98,
+                        "  os_profile {\n"
+                    ],
+                    [
+                        99,
+                        "    computer_name  = \"${var.hostname}\"\n"
+                    ],
+                    [
+                        100,
+                        "    admin_username = \"${var.admin_username}\"\n"
+                    ],
+                    [
+                        101,
+                        "    admin_password = \"${var.admin_password}\"\n"
+                    ],
+                    [
+                        102,
+                        "  }\n"
+                    ],
+                    [
+                        103,
+                        "\n"
+                    ],
+                    [
+                        104,
+                        "  os_profile_linux_config {\n"
+                    ],
+                    [
+                        105,
+                        "      disable_password_authentication = true\n"
+                    ],
+                    [
+                        106,
+                        "      ssh_keys {\n"
+                    ],
+                    [
+                        107,
+                        "          path     = \"/home/${var.admin_username}/.ssh/authorized_keys\"\n"
+                    ],
+                    [
+                        108,
+                        "          key_data = \"${var.ssh_pubkey}\"\n"
+                    ],
+                    [
+                        109,
+                        "      }\n"
+                    ],
+                    [
+                        110,
+                        "  }\n"
+                    ],
+                    [
+                        111,
+                        "\n"
+                    ],
+                    [
+                        112,
+                        "  # This is to ensure SSH comes up before we run the local exec.\n"
+                    ],
+                    [
+                        113,
+                        "  provisioner \"remote-exec\" { \n"
+                    ],
+                    [
+                        114,
+                        "    inline = [\"echo 'Hello World'\"]\n"
+                    ],
+                    [
+                        115,
+                        "\n"
+                    ],
+                    [
+                        116,
+                        "    connection {\n"
+                    ],
+                    [
+                        117,
+                        "      type = \"ssh\"\n"
+                    ],
+                    [
+                        118,
+                        "      host = \"${azurerm_public_ip.tf-ansible-pip.fqdn}\"\n"
+                    ],
+                    [
+                        119,
+                        "      user = \"${var.admin_username}\"\n"
+                    ],
+                    [
+                        120,
+                        "      private_key = \"${var.ssh_key}\"\n"
+                    ],
+                    [
+                        121,
+                        "    }\n"
+                    ],
+                    [
+                        122,
+                        "  }\n"
+                    ],
+                    [
+                        123,
+                        "\n"
+                    ],
+                    [
+                        124,
+                        "  provisioner \"local-exec\" {\n"
+                    ],
+                    [
+                        125,
+                        "    command = \"ansible-playbook -i ../ansible/inventory.yaml --private-key ${var.ssh_key_path} ../ansible/httpd.yml\"\n"
+                    ],
+                    [
+                        126,
+                        "  }\n"
+                    ],
+                    [
+                        127,
+                        "\n"
+                    ],
+                    [
+                        128,
+                        "}"
+                    ]
+                ],
+                "file_path": "/terraform_azure/main.tf",
+                "file_abs_path": "/app/terraform_azure/main.tf",
+                "repo_file_path": "/terraform_azure/main.tf",
+                "file_line_range": [
+                    75,
+                    128
+                ],
+                "resource": "azurerm_virtual_machine.site",
+                "evaluations": null,
+                "check_class": "checkov.common.graph.checks_infra.base_check",
+                "fixed_definition": null,
+                "entity_tags": {},
+                "caller_file_path": null,
+                "caller_file_line_range": null,
+                "resource_address": null,
+                "severity": null,
+                "bc_category": null,
+                "benchmarks": {},
+                "description": null,
+                "short_description": null,
+                "vulnerability_details": null,
+                "connected_node": null,
+                "guideline": null,
+                "details": [],
+                "breadcrumbs": {
+                    "name": [
+                        {
+                            "type": "variable",
+                            "name": "hostname",
+                            "path": "/app/terraform_azure/variables.tf",
+                            "module_connection": false
+                        }
+                    ],
+                    "os_profile.computer_name": [
+                        {
+                            "type": "variable",
+                            "name": "hostname",
+                            "path": "/app/terraform_azure/variables.tf",
+                            "module_connection": false
+                        }
+                    ],
+                    "storage_os_disk.name": [
+                        {
+                            "type": "variable",
+                            "name": "hostname",
+                            "path": "/app/terraform_azure/variables.tf",
+                            "module_connection": false
+                        }
+                    ],
+                    "location": [
+                        {
+                            "type": "variable",
+                            "name": "location",
+                            "path": "/app/terraform_azure/variables.tf",
+                            "module_connection": false
+                        }
+                    ],
+                    "vm_size": [
+                        {
+                            "type": "variable",
+                            "name": "vm_size",
+                            "path": "/app/terraform_azure/variables.tf",
+                            "module_connection": false
+                        }
+                    ],
+                    "storage_image_reference.publisher": [
+                        {
+                            "type": "variable",
+                            "name": "image_publisher",
+                            "path": "/app/terraform_azure/variables.tf",
+                            "module_connection": false
+                        }
+                    ],
+                    "storage_image_reference.offer": [
+                        {
+                            "type": "variable",
+                            "name": "image_offer",
+                            "path": "/app/terraform_azure/variables.tf",
+                            "module_connection": false
+                        }
+                    ],
+                    "storage_image_reference.sku": [
+                        {
+                            "type": "variable",
+                            "name": "image_sku",
+                            "path": "/app/terraform_azure/variables.tf",
+                            "module_connection": false
+                        }
+                    ],
+                    "storage_image_reference.version": [
+                        {
+                            "type": "variable",
+                            "name": "image_version",
+                            "path": "/app/terraform_azure/variables.tf",
+                            "module_connection": false
+                        }
+                    ],
+                    "provisioner/remote-exec.connection.user": [
+                        {
+                            "type": "variable",
+                            "name": "admin_username",
+                            "path": "/app/terraform_azure/variables.tf",
+                            "module_connection": false
+                        }
+                    ],
+                    "provisioner/remote-exec.connection": [
+                        {
+                            "type": "variable",
+                            "name": "admin_username",
+                            "path": "/app/terraform_azure/variables.tf",
+                            "module_connection": false
+                        }
+                    ],
+                    "os_profile.admin_username": [
+                        {
+                            "type": "variable",
+                            "name": "admin_username",
+                            "path": "/app/terraform_azure/variables.tf",
+                            "module_connection": false
+                        }
+                    ],
+                    "os_profile_linux_config.ssh_keys.path": [
+                        {
+                            "type": "variable",
+                            "name": "admin_username",
+                            "path": "/app/terraform_azure/variables.tf",
+                            "module_connection": false
+                        }
+                    ],
+                    "os_profile_linux_config.ssh_keys": [
+                        {
+                            "type": "variable",
+                            "name": "admin_username",
+                            "path": "/app/terraform_azure/variables.tf",
+                            "module_connection": false
+                        }
+                    ],
+                    "os_profile.admin_password": [
+                        {
+                            "type": "variable",
+                            "name": "admin_password",
+                            "path": "/app/terraform_azure/variables.tf",
+                            "module_connection": false
+                        }
+                    ],
+                    "resource_group_name": [
+                        {
+                            "type": "variable",
+                            "name": "resource_group",
+                            "path": "/app/terraform_azure/variables.tf",
+                            "module_connection": false
+                        },
+                        {
+                            "type": "resource",
+                            "name": "azurerm_resource_group.terraform_ansible",
+                            "path": "/app/terraform_azure/main.tf",
+                            "module_connection": false
+                        }
+                    ]
+                }
+            },
+            {
+                "check_id": "CKV_AZURE_119",
+                "bc_check_id": null,
+                "check_name": "Ensure that Network Interfaces don't use public IPs",
+                "check_result": {
+                    "result": "FAILED",
+                    "entity": {
+                        "azurerm_network_interface": {
+                            "tf-ansible-nic": {
+                                "__end_line__": 65,
+                                "__start_line__": 53,
+                                "ip_configuration": [
+                                    {
+                                        "name": [
+                                            "tfguideipconfig"
+                                        ],
+                                        "private_ip_address_allocation": [
+                                            "Dynamic"
+                                        ],
+                                        "public_ip_address_id": [
+                                            "azurerm_public_ip.tf-ansible-pip.id"
+                                        ],
+                                        "subnet_id": [
+                                            "azurerm_subnet.subnet.id"
+                                        ]
+                                    }
+                                ],
+                                "location": [
+                                    "centralus"
+                                ],
+                                "name": [
+                                    "tfguidetf-ansible-nic"
+                                ],
+                                "network_security_group_id": [
+                                    "azurerm_network_security_group.tf-ansible-sg.id"
+                                ],
+                                "resource_group_name": [
+                                    "Terraform-Ansible"
+                                ]
+                            }
+                        }
+                    },
+                    "evaluated_keys": [
+                        "resource_type"
+                    ]
+                },
+                "code_block": [
+                    [
+                        53,
+                        "resource \"azurerm_network_interface\" \"tf-ansible-nic\" {\n"
+                    ],
+                    [
+                        54,
+                        "  name                      = \"${var.prefix}tf-ansible-nic\"\n"
+                    ],
+                    [
+                        55,
+                        "  location                  = \"${var.location}\"\n"
+                    ],
+                    [
+                        56,
+                        "  resource_group_name       = \"${azurerm_resource_group.terraform_ansible.name}\"\n"
+                    ],
+                    [
+                        57,
+                        "  network_security_group_id = \"${azurerm_network_security_group.tf-ansible-sg.id}\"\n"
+                    ],
+                    [
+                        58,
+                        "\n"
+                    ],
+                    [
+                        59,
+                        "  ip_configuration {\n"
+                    ],
+                    [
+                        60,
+                        "    name                          = \"${var.prefix}ipconfig\"\n"
+                    ],
+                    [
+                        61,
+                        "    subnet_id                     = \"${azurerm_subnet.subnet.id}\"\n"
+                    ],
+                    [
+                        62,
+                        "    private_ip_address_allocation = \"Dynamic\"\n"
+                    ],
+                    [
+                        63,
+                        "    public_ip_address_id          = \"${azurerm_public_ip.tf-ansible-pip.id}\"\n"
+                    ],
+                    [
+                        64,
+                        "  }\n"
+                    ],
+                    [
+                        65,
+                        "}\n"
+                    ]
+                ],
+                "file_path": "/terraform_azure/main.tf",
+                "file_abs_path": "/app/terraform_azure/main.tf",
+                "repo_file_path": "/terraform_azure/main.tf",
+                "file_line_range": [
+                    53,
+                    65
+                ],
+                "resource": "azurerm_network_interface.tf-ansible-nic",
+                "evaluations": null,
+                "check_class": "checkov.common.graph.checks_infra.base_check",
+                "fixed_definition": null,
+                "entity_tags": {},
+                "caller_file_path": null,
+                "caller_file_line_range": null,
+                "resource_address": null,
+                "severity": null,
+                "bc_category": null,
+                "benchmarks": {},
+                "description": null,
+                "short_description": null,
+                "vulnerability_details": null,
+                "connected_node": null,
+                "guideline": null,
+                "details": [],
+                "breadcrumbs": {
+                    "name": [
+                        {
+                            "type": "variable",
+                            "name": "prefix",
+                            "path": "/app/terraform_azure/variables.tf",
+                            "module_connection": false
+                        }
+                    ],
+                    "ip_configuration.name": [
+                        {
+                            "type": "variable",
+                            "name": "prefix",
+                            "path": "/app/terraform_azure/variables.tf",
+                            "module_connection": false
+                        }
+                    ],
+                    "location": [
+                        {
+                            "type": "variable",
+                            "name": "location",
+                            "path": "/app/terraform_azure/variables.tf",
+                            "module_connection": false
+                        }
+                    ],
+                    "resource_group_name": [
+                        {
+                            "type": "variable",
+                            "name": "resource_group",
+                            "path": "/app/terraform_azure/variables.tf",
+                            "module_connection": false
+                        },
+                        {
+                            "type": "resource",
+                            "name": "azurerm_resource_group.terraform_ansible",
+                            "path": "/app/terraform_azure/main.tf",
+                            "module_connection": false
+                        }
+                    ]
+                }
+            }
+        ]
+    },
+    "summary": {
+        "passed": 16,
+        "failed": 11,
+        "skipped": 0,
+        "parsing_errors": 0,
+        "resource_count": 9,
+        "checkov_version": "2.2.22"
+    }
+}

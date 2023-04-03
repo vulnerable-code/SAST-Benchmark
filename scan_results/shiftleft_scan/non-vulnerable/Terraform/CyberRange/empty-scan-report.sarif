@@ -1,0 +1,69 @@
+{
+  "runs": [
+    {
+      "tool": {
+        "driver": {
+          "name": "Empty Scan Ignore",
+          "version": "1.0.0-scan",
+          "fullName": "Empty Scan Ignore"
+        }
+      },
+      "conversion": {
+        "tool": {
+          "driver": {
+            "name": "@ShiftLeft/sast-scan"
+          }
+        },
+        "invocation": {
+          "arguments": [],
+          "executionSuccessful": true,
+          "commandLine": "",
+          "endTimeUtc": "2023-03-31T13:46:10Z",
+          "workingDirectory": {
+            "uri": "file:///home/azureuser/SAST-Benchmark/repositories/non-vulnerable/Terraform/CyberRange"
+          }
+        }
+      },
+      "invocations": [
+        {
+          "executionSuccessful": true,
+          "endTimeUtc": "2023-03-31T13:46:10Z",
+          "workingDirectory": {
+            "uri": "file:///home/azureuser/SAST-Benchmark/repositories/non-vulnerable/Terraform/CyberRange"
+          }
+        }
+      ],
+      "properties": {
+        "metrics": {
+          "total": 0,
+          "critical": 0,
+          "high": 0,
+          "medium": 0,
+          "low": 0
+        }
+      },
+      "results": [],
+      "automationDetails": {
+        "description": {
+          "text": "Static Analysis Security Test results using @ShiftLeft/sast-scan"
+        },
+        "guid": "c9202de2-6135-4f76-b6a9-a1278b880c36"
+      },
+      "versionControlProvenance": [
+        {
+          "branch": "master",
+          "repositoryUri": "https://github.com/secdevops-cuse/CyberRange",
+          "revisionId": "123ff0e4feab31b6774226a1741d63ab791f10ee"
+        }
+      ]
+    }
+  ],
+  "version": "2.1.0",
+  "$schema": "https://raw.githubusercontent.com/oasis-tcs/sarif-spec/master/Schemata/sarif-schema-2.1.0.json",
+  "inlineExternalProperties": [
+    {
+      "guid": "c9202de2-6135-4f76-b6a9-a1278b880c36",
+      "runGuid": "61d590fc-daff-4f0d-9c35-26ddb314dbc2"
+    }
+  ]
+}

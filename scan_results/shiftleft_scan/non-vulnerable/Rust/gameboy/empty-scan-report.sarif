@@ -1,0 +1,69 @@
+{
+  "runs": [
+    {
+      "tool": {
+        "driver": {
+          "name": "Empty Scan Ignore",
+          "version": "1.0.0-scan",
+          "fullName": "Empty Scan Ignore"
+        }
+      },
+      "conversion": {
+        "tool": {
+          "driver": {
+            "name": "@ShiftLeft/sast-scan"
+          }
+        },
+        "invocation": {
+          "arguments": [],
+          "executionSuccessful": true,
+          "commandLine": "",
+          "endTimeUtc": "2023-03-31T13:46:07Z",
+          "workingDirectory": {
+            "uri": "file:///home/azureuser/SAST-Benchmark/repositories/non-vulnerable/Rust/gameboy"
+          }
+        }
+      },
+      "invocations": [
+        {
+          "executionSuccessful": true,
+          "endTimeUtc": "2023-03-31T13:46:07Z",
+          "workingDirectory": {
+            "uri": "file:///home/azureuser/SAST-Benchmark/repositories/non-vulnerable/Rust/gameboy"
+          }
+        }
+      ],
+      "properties": {
+        "metrics": {
+          "total": 0,
+          "critical": 0,
+          "high": 0,
+          "medium": 0,
+          "low": 0
+        }
+      },
+      "results": [],
+      "automationDetails": {
+        "description": {
+          "text": "Static Analysis Security Test results using @ShiftLeft/sast-scan"
+        },
+        "guid": "3b98ce62-a330-414c-9ab0-eef76d39fb34"
+      },
+      "versionControlProvenance": [
+        {
+          "branch": "master",
+          "repositoryUri": "https://github.com/mohanson/gameboy",
+          "revisionId": "bc90e61fa2de41fccd687a0ed98a8346066875f9"
+        }
+      ]
+    }
+  ],
+  "version": "2.1.0",
+  "$schema": "https://raw.githubusercontent.com/oasis-tcs/sarif-spec/master/Schemata/sarif-schema-2.1.0.json",
+  "inlineExternalProperties": [
+    {
+      "guid": "3b98ce62-a330-414c-9ab0-eef76d39fb34",
+      "runGuid": "4c0bf641-eb98-4ebd-a25c-94629a73c80b"
+    }
+  ]
+}
